@@ -9,7 +9,7 @@ export default function Login() {
             <header className={styles.headerWrapper}>
                 <div className={styles.headerLogo}>
                     <Image 
-                        src="/logo_treves.png"
+                        src="/logo.png"
                         alt="Logo of treves" 
                         width={358}
                         height={60}
