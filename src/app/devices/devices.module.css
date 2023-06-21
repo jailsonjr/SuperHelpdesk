@@ -1,9 +1,120 @@
-.main {
-
+.main{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .mainMenu {
-  background-color: #fff;
-  height: 60px;
-  
+  display: flex;
+  padding: 0 1.875rem;  
+  max-width: 1920px;
+  margin: 0 auto;
 }
+
+.mainMenuBackground {
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #ddd;
+  z-index: 2;
+  height: 60px;
+}
+
+.logo {
+  margin-top: 0.6rem;
+}
+
+.nav {
+  margin-left: 2rem;
+  margin-top: 0.29rem;
+  display: flex;
+  max-height: 50px;
+}
+
+.navlink {
+  padding: 0.75rem 1rem;
+  display: flex;
+  text-decoration: none;
+  border-radius: 3px;
+
+}
+
+.navicon {
+  color: #333;
+}
+
+.navtext {
+  vertical-align: middle;
+  margin-left: 1rem;
+  font-size: 0.875rem;
+  margin-top: 0.2rem;
+  color: #333;
+  font-weight: 500
+}
+
+.navlink:hover {
+    background-color: #0A2D6C;
+}
+
+.navlink:hover .navicon{
+  color: #fff;
+}
+
+.navlink:hover .navtext{
+  color: #fff;
+}
+
+.submenu {
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #ccc;
+  height: 60px;
+  z-index: 1;
+  width: calc(100% - 1.875rem);
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 1rem 1.875rem;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter {
+  display: flex;
+}
+
+.field {
+  border: 1px solid #eaeaea;
+  background-color: #eaeaea;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  outline: none;
+  min-width: 500px;
+}
+
+.title {
+  font-size: 1.10rem;
+  color: #333;
+  font-weight: 500;
+  margin-right: 5rem;
+  margin-top: 0.2rem;
+}
+
+.total {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 0.3rem;
+  font-weight: 500;
+  float: left;
+}
+
+
+
+
+.grid {
+  background-color: #fff;
+  box-shadow: 1px 1px 3px #ccc;
+  height: 500px;
+  width: calc(100% - 1.875rem);
+  max-width: 1920px;
+  margin: 1rem auto 0;
+  border-radius: 3px;
+}
+

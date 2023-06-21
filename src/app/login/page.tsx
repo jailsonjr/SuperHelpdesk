@@ -57,16 +57,6 @@ export default function Login() {
                 </div>
             </form>
             <footer className={styles.footerWrapper}>
-                <Link href='/google' className={styles.loginGoogleButton}>
-                            <Image 
-                                src="/icons/google-icon.png"
-                                alt="icon of password" 
-                                width={25}
-                                height={26}
-                                className={styles.formLoginIcon}
-                            />
-                    <span>Fazer login com o Google</span>
-                </Link>
                 <span className={styles.rights}>2023. Todos direitos reservados.</span>
             </footer>
         </section>
