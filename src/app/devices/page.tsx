@@ -1,8 +1,12 @@
 import Link from 'next/link'
 import styles from './devices.module.css'
 import Image from 'next/image'
+import usersData from '@/data/users';
 
-export default function Devices() {
+export default async function Devices() {
+
+  const result = await usersData;
+
   return (
     <main className={styles.main}>
       <div className={styles.mainMenuBackground}>
@@ -14,6 +18,7 @@ export default function Devices() {
                         width={148}
                         height={25}
                         className={styles.logo}
+                        priority
                     />
           </div>
           <nav className={styles.nav}>
@@ -42,6 +47,9 @@ export default function Devices() {
         <span className={styles.total}>150 devices</span>
       </div>
       <div className={styles.grid}>
+        {result && result.map(data =>(
+          <p key={data.name}>{data.name}</p>
+        ))}
         <table border-collapse="collapse">
           <thead>
             <tr>
@@ -280,14 +288,6 @@ export default function Devices() {
 
           </tbody>
           <tfoot>
-            <span>Anterior</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>Proximo</span>
           </tfoot>
         </table>
       </div>
