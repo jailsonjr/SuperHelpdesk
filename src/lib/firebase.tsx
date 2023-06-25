@@ -1,14 +1,16 @@
-import {initializeApp} from 'firebase/app';
-import * as firestore from 'firebase/firestore';
+import admin from 'firebase-admin';
+import * as firestore from 'firebase-admin/firestore';
 
-const config = require('../config/firebase-key.json');
+const credentials = require('@/config/firebase-key.json')
 
-const app = initializeApp(config);
-const db = firestore.getFirestore(app);
+if(!admin.apps.length){
+    admin.initializeApp({
+        credential: admin.credential.cert(credentials)
+    });
+}
 
+const db = admin.firestore();
 export default db;
-
-
 
 
 

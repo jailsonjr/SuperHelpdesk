@@ -1,9 +1,17 @@
-import Link from 'next/link'
-import styles from './devices.module.css'
-import Image from 'next/image'
+import Link from 'next/link';
+import styles from './devices.module.css';
+import Image from 'next/image';
+import { newDeviceType } from '@/data/devices'
+
+type resultType = {
+  doc_id: string,
+  doc_data: newDeviceType
+}
 
 export default async function Devices() {
 
+  const request = await fetch(`http://localhost:3000/api/devices`, {cache: 'no-cache'});
+  const result:resultType[] = await request.json();
 
   return (
     <main className={styles.main}>
@@ -40,11 +48,11 @@ export default async function Devices() {
       </div>
       </div>
       <div className={styles.submenu}>
-        <div className={styles.title}>Devices</div>
-        <input type='text' placeholder='Search for ID, Model, Brand' className={styles.field}/>
+        <div className={styles.title}>Equipamentos</div>
+        <input type='text' placeholder='Pesquise por ID, Modelo, Serial ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>150 devices</span>
-          <Link href='/devices/new-device' className={styles.newRegister}>New Device</Link>
+          <span className={styles.total}>{result.length} equipamentos</span>
+          <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>
       <div className={styles.grid}>
@@ -52,242 +60,30 @@ export default async function Devices() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Plant</th>
-              <th>Brand</th>
-              <th>Model</th>
+              <th>Planta</th>
+              <th>Marca/Modelo</th>
               <th>Serial</th>
-              <th>User</th>
-              <th>Delivered</th>
-              <th>Owner</th>
-              <th>End Loan</th>
+              <th>Usuario</th>
+              <th>Proprietário</th>
+              <th>Fim do Contrato</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-            <tr>
-              <td>DT-BR87-003</td>
-              <td>Quatro Barras</td>
-              <td>Dell</td>
-              <td>Latitude 5400</td>
-              <td>AKJF44985</td>
-              <td>Jailson Junior</td>
-              <td>12/04/2023</td>
-              <td>04958 - Telefonica</td>
-              <td>30/05/2024</td>
-            </tr>
-
+          {result.length > 0 && result.map((document:resultType) => {
+              return (<tr key={document.doc_data.id_treves}>
+                <td>{document.doc_data.id_treves.toLocaleUpperCase()}</td>
+                <td>{document.doc_data.filial}</td>
+                <td>{document.doc_data.brandModel}</td>
+                <td>{document.doc_data.serialNumber.toLocaleUpperCase()}</td>
+                <td>{document.doc_data.user}</td>
+                <td>{document.doc_data.contractCompany}</td>
+                <td>{document.doc_data.dateEndLoan}</td>
+                <td>{document.doc_data.status.toLocaleUpperCase()}</td>
+              </tr>);
+            })}
           </tbody>
-          <tfoot>
-          </tfoot>
-        </table>
+        </table> 
       </div>
     </main>
   )

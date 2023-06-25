@@ -235,3 +235,50 @@
   cursor: pointer;
   background-color: #0A2D6C;
 }
+
+.buttonCancel {
+  background-color: #620000;
+  padding: 0.3rem 3rem;
+  display: block;
+  border-radius: 3px;
+  border: none;
+  font-size: 0.9rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.buttonCancel:hover {
+  cursor: pointer;
+  background-color: #840000;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 500;
+}
+
+.modal .content {
+  position: relative;
+  background-color: #fff;
+  top: 50%;
+  left: calc(50% - 86px);
+  border-radius: 3px;
+  padding: 1rem;
+  display: inline-flex;
+}
+
+.modal .content .IconLoading{
+  margin-right: 1rem;
+}
+
+.modal .content span {
+  display: inline-block;
+  font-weight: 600;
+  padding-top: 0.2rem;
+  color: #333;
+}
