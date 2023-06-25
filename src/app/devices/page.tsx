@@ -1,11 +1,9 @@
 import Link from 'next/link'
 import styles from './devices.module.css'
 import Image from 'next/image'
-import usersData from '@/data/users';
 
 export default async function Devices() {
 
-  const result = await usersData;
 
   return (
     <main className={styles.main}>
@@ -44,12 +42,12 @@ export default async function Devices() {
       <div className={styles.submenu}>
         <div className={styles.title}>Devices</div>
         <input type='text' placeholder='Search for ID, Model, Brand' className={styles.field}/>
-        <span className={styles.total}>150 devices</span>
+        <div>
+          <span className={styles.total}>150 devices</span>
+          <Link href='/devices/new-device' className={styles.newRegister}>New Device</Link>
+        </div>
       </div>
       <div className={styles.grid}>
-        {result && result.map(data =>(
-          <p key={data.name}>{data.name}</p>
-        ))}
         <table border-collapse="collapse">
           <thead>
             <tr>
