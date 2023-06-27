@@ -13,7 +13,7 @@ type resultType = {
 }
 
 async function getData() {
-  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devicesAPI`;
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`;
   const result = await fetch(uri);
   const dataResult = await result.json();
   return dataResult
@@ -101,7 +101,7 @@ export default function Devices() {
                 <td>{document.doc_data.brandModel}</td>
                 <td>{document.doc_data.serialNumber.toLocaleUpperCase()}</td>
                 <td>{document.doc_data.user}</td>
-                <td>{document.doc_data.contractCompany}</td>
+                <td>{document.doc_data.company}</td>
                 <td>{document.doc_data.dateEndLoan}</td>
                 <td>{document.doc_data.status.toLocaleUpperCase()}</td>
               </tr>);

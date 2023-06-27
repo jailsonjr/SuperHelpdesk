@@ -5,9 +5,19 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import LoadingIcon from '../../../../public/icons/loading.gif'
 import { FormEvent, useState } from 'react'
+import useSWR from 'swr'
 
+async function getDataUsers() {
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
+  const result = await fetch(uri);
+  const dataResult = await result.json();
+  return dataResult
+}
 
 export default function NewDevices() {
+
+  const { data } = useSWR<any[]>('get-users',getDataUsers);
+  console.log(data);
 
   const [showModal, setShowModal] = useState('none');
   const [IDTreves, setIdTreves] = useState('');
@@ -62,8 +72,7 @@ export default function NewDevices() {
       }
     }
 
-    let uri = process.env.URL_BASE;
-    const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/devicesAPI`,{
+    const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`,{
       method: 'POST',
       body: JSON.stringify(dataRaw)
     })
@@ -170,19 +179,24 @@ export default function NewDevices() {
               <span>Filial *</span>
               <select name='filial' placeholder='status' required onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
                 <option value=''></option>
-                <option value='F0101'>0101 - Quatro Barras</option>
-                <option value='F0102'>0102 - Caçapava</option>
-                <option value='F0103'>0103 - Trecin</option>
-                <option value='F0104'>0104 - Betim</option>
-                <option value='F0105'>0105 - Residente - Renault</option>
-                <option value='F0106'>0106 - Residente - VW</option>
-                <option value='F0107'>0107 - Residente - Honda</option>
+                <option value='0101 - Quatro Barras'>0101 - Quatro Barras</option>
+                <option value='0102 - Caçapava'>0102 - Caçapava</option>
+                <option value='0103 - Trecin'>0103 - Trecin</option>
+                <option value='0104 - Betim'>0104 - Betim</option>
+                <option value='0105 - Residente - Renault'>0105 - Residente - Renault</option>
+                <option value='0106 - Residente - VW'>0106 - Residente - VW</option>
+                <option value='0107 - Residente - Honda'>0107 - Residente - Honda</option>
               </select>
             </div>
 
             <div>
-              <span>Usuário / Local</span>
-              <input type='text' placeholder='Informe o usuário' onChange={(e) => {setUser(e.target.value)}} />
+              <span>E-mail do usuário ou Local da Produção</span>
+              <input type='text' placeholder='Informe o usuário' onChange={(e) => {setUser(e.target.value)}} list='users' />
+              <datalist id='users'>
+                {data && data.map((user) => {
+                  return <option key={user.doc_data.name} value={user.doc_data.name}>{user.doc_data.name}</option>
+                })}
+              </datalist>
             </div>
 
             <div>
