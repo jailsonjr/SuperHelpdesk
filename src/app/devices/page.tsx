@@ -20,6 +20,8 @@ async function getData() {
 export default function Devices() {
 
   let uri = process.env.URL_BASE;
+
+  console.log(uri);
   const { data } = useSWR<any[]>(`${uri}/api/devicesAPI`, getData);
 
   let result = {length: data?.length, data};
