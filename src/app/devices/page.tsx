@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './devices.module.css';
 import Image from 'next/image';
-import { newDeviceType } from '@/data/devices'
+import { newDeviceType } from '@/app/data/devices';
 
 type resultType = {
   doc_id: string,
@@ -10,9 +10,18 @@ type resultType = {
 
 export default async function Devices() {
 
-  const uri = process.env.URL_BASE;
-  const request = await fetch(`${uri}/api/devices`);
-  const result:resultType[] = await request.json();
+  async function fetchData() {
+    let uri = process.env.URL_BASE;
+    console.log(uri);
+    const result = await fetch(`${uri}/api/devices`);
+    const dataResult = await result.json();
+    return dataResult
+  }
+
+  
+  let result = await fetchData();
+  console.log(result);
+
 
   return (
     <main className={styles.main}>
@@ -52,7 +61,7 @@ export default async function Devices() {
         <div className={styles.title}>Equipamentos</div>
         <input type='text' placeholder='Pesquise por ID, Modelo, Serial ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>{result.length} equipamentos</span>
+          <span className={styles.total}>0 equipamentos</span>
           <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import db from '@/lib/firebase';
+import db from '@/app/lib/firebase';
 
 export type newDeviceType = {
   id_treves: string,
