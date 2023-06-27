@@ -63,7 +63,7 @@ export default function NewDevices() {
     }
 
     let uri = process.env.URL_BASE;
-    const request = await fetch(`${uri}/api/devices`,{
+    const request = await fetch(`${uri}/api/devicesAPI`,{
       method: 'POST',
       body: JSON.stringify(dataRaw)
     })

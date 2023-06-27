@@ -8,17 +8,18 @@ type resultType = {
   doc_data: newDeviceType
 }
 
+async function fetchData() {
+  let uri = process.env.URL_BASE;
+  console.log(uri, process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  const result = await fetch(`${uri}/api/devicesAPI`);
+  const dataResult = await result.json();
+  console.log(dataResult);
+  return dataResult
+}
+
 export default async function Devices() {
+  console.log(process.env.URL_BASE, process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-  async function fetchData() {
-    let uri = process.env.URL_BASE;
-    console.log(uri);
-    const result = await fetch(`${uri}/api/devices`);
-    const dataResult = await result.json();
-    return dataResult
-  }
-
-  
   let result = await fetchData();
   console.log(result);
 
@@ -98,4 +99,3 @@ export default async function Devices() {
     </main>
   )
 }
-
