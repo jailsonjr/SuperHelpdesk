@@ -12,6 +12,7 @@ type resultType = {
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devicesAPI`;
+  console.log(uri);
   const result = await fetch(uri);
   const dataResult = await result.json();
   return dataResult
