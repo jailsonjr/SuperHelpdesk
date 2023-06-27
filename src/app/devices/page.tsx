@@ -15,6 +15,7 @@ async function getData() {
   console.log(uri);
   const result = await fetch(uri);
   const dataResult = await result.json();
+  console.log(dataResult);
   return dataResult
 }
 
