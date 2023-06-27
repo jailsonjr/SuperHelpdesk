@@ -11,7 +11,7 @@ type resultType = {
 }
 
 async function getData() {
-  let uri = `${process.env.URL_BASE}/api/devicesAPI`;
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devicesAPI`;
   const result = await fetch(uri);
   const dataResult = await result.json();
   return dataResult
@@ -19,10 +19,7 @@ async function getData() {
 
 export default function Devices() {
 
-  let uri = process.env.URL_BASE;
-
-  console.log(uri);
-  const { data } = useSWR<any[]>(`${uri}/api/devicesAPI`, getData);
+  const { data } = useSWR<any[]>(getData);
 
   let result = {length: data?.length, data};
 
