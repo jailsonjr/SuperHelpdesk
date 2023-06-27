@@ -4,6 +4,8 @@ import styles from './devices.module.css';
 import Image from 'next/image';
 import { newDeviceType } from '@/app/data/devices';
 import useSWR from 'swr'
+import { useEffect, useState } from 'react';
+import LoadingIcon from '../../../public/icons/loading.gif';
 
 type resultType = {
   doc_id: string,
@@ -12,22 +14,28 @@ type resultType = {
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devicesAPI`;
-  console.log(uri);
   const result = await fetch(uri);
   const dataResult = await result.json();
-  console.log(dataResult);
   return dataResult
 }
 
 export default function Devices() {
 
-  const { data } = useSWR<any[]>('get-devices',getData);
+  const { data, isLoading } = useSWR<any[]>('get-devices',getData);
+  const [showModal, setShowModal] = useState('none');
 
   let result = {length: data?.length, data};
 
-  console.log(result);
+  useEffect(()=> {
+    if(isLoading){
+      setShowModal('block')
+    }else {
+      setShowModal('none')
+    }    
+  }, [isLoading])
 
   return (
+    <>
     <main className={styles.main}>
       <div className={styles.mainMenuBackground}>
       <div className={styles.mainMenu}>
@@ -84,6 +92,7 @@ export default function Devices() {
             </tr>
           </thead>
           <tbody>
+            
             {result && result.data?.map((document) => {
               return (
               <tr key={document.doc_data.id_treves}>
@@ -101,5 +110,19 @@ export default function Devices() {
         </table> 
       </div>
     </main>
+        <div style={{display: showModal}} className={styles.modal}>
+        <div className={styles.content}>
+           <Image 
+                  unoptimized={true}
+                  src={LoadingIcon}
+                  alt="Loading icon" 
+                  width={24}
+                  height={24}
+                  className={styles.IconLoading}
+            />
+            <span>Carregando</span>
+          </div>
+      </div>
+      </>
   )
 }
