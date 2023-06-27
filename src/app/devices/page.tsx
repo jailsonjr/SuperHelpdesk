@@ -11,8 +11,8 @@ type resultType = {
 }
 
 async function getData() {
-  let uri = process.env.URL_BASE;
-  const result = await fetch(`${uri}/api/devicesAPI`);
+  let uri = `${process.env.URL_BASE}/api/devicesAPI`;
+  const result = await fetch(uri);
   const dataResult = await result.json();
   return dataResult
 }
