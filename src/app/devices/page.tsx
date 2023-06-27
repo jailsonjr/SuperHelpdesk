@@ -1,28 +1,28 @@
+'use client'
 import Link from 'next/link';
 import styles from './devices.module.css';
 import Image from 'next/image';
 import { newDeviceType } from '@/app/data/devices';
+import useSWR from 'swr'
 
 type resultType = {
   doc_id: string,
   doc_data: newDeviceType
 }
 
-async function fetchData() {
+async function getData() {
   let uri = process.env.URL_BASE;
-  console.log(uri, process.env.GOOGLE_APPLICATION_CREDENTIALS);
   const result = await fetch(`${uri}/api/devicesAPI`);
   const dataResult = await result.json();
-  console.log(dataResult);
   return dataResult
 }
 
-export default async function Devices() {
-  console.log(process.env.URL_BASE, process.env.GOOGLE_APPLICATION_CREDENTIALS);
+export default function Devices() {
 
-  let result = await fetchData();
-  console.log(result);
+  let uri = process.env.URL_BASE;
+  const { data } = useSWR<any[]>(`${uri}/api/devicesAPI`, getData);
 
+  let result = {length: data?.length, data};
 
   return (
     <main className={styles.main}>
@@ -62,7 +62,7 @@ export default async function Devices() {
         <div className={styles.title}>Equipamentos</div>
         <input type='text' placeholder='Pesquise por ID, Modelo, Serial ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>0 equipamentos</span>
+          <span className={styles.total}>{result.length} equipamentos</span>
           <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>
@@ -81,8 +81,9 @@ export default async function Devices() {
             </tr>
           </thead>
           <tbody>
-          {result.length > 0 && result.map((document:resultType) => {
-              return (<tr key={document.doc_data.id_treves}>
+            {result && result.data?.map((document) => {
+              return (
+              <tr key={document.doc_data.id_treves}>
                 <td>{document.doc_data.id_treves.toLocaleUpperCase()}</td>
                 <td>{document.doc_data.filial}</td>
                 <td>{document.doc_data.brandModel}</td>

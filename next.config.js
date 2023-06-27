@@ -2,6 +2,7 @@
 const nextConfig = {
     env: {
         GOOGLE_APPLICATION_CREDENTIALS: './src/app/config/firebase-key.json'
+
     },
 }
 
