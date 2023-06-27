@@ -10,7 +10,7 @@ type resultType = {
 
 export default async function Devices() {
 
-  const request = await fetch(`https://superdesk.vercel.app/api/devices`, {cache: 'no-cache'});
+  const request = await fetch(`https://superdesk.vercel.app/api/devices`);
   const result:resultType[] = await request.json();
 
   return (
@@ -88,3 +88,4 @@ export default async function Devices() {
     </main>
   )
 }
+

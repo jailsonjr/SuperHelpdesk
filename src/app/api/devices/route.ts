@@ -10,5 +10,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const dataRaw:newDeviceType = await req.json();
   const insertData = await insertDevices(dataRaw);
+
   return NextResponse.json(insertData);
 }
