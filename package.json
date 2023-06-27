@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "export GOOGLE_APPLICATION_CREDENTIALS=/Users/jailsonjr/Projects/superdesk/src/config/firebase-key.json && next dev",
+    "dev": "next dev",
+    "test": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

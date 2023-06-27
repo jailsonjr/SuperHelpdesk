@@ -10,7 +10,8 @@ type resultType = {
 
 export default async function Devices() {
 
-  const request = await fetch(`https://superdesk.vercel.app/api/devices`);
+  const uri = process.env.URL_BASE;
+  const request = await fetch(`${uri}/api/devices`);
   const result:resultType[] = await request.json();
 
   return (
