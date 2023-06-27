@@ -19,9 +19,11 @@ async function getData() {
 
 export default function Devices() {
 
-  const { data } = useSWR<any[]>(getData);
+  const { data } = useSWR<any[]>('get-devices',getData);
 
   let result = {length: data?.length, data};
+
+  console.log(result);
 
   return (
     <main className={styles.main}>
