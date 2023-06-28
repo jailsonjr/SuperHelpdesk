@@ -53,11 +53,11 @@ export default function Devices() {
             <tr>
               <th>ID</th>
               <th>Planta</th>
+              <th>Tipo</th>
               <th>Marca/Modelo</th>
               <th>Serial</th>
               <th>Usuario</th>
               <th>Proprietário</th>
-              <th>Fim do Contrato</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -68,11 +68,11 @@ export default function Devices() {
               <tr key={document.doc_data.id_treves}>
                 <td>{document.doc_data.id_treves.toLocaleUpperCase()}</td>
                 <td>{document.doc_data.filial}</td>
+                <td>{document.doc_data.type.toLocaleUpperCase()}</td>
                 <td>{document.doc_data.brandModel}</td>
                 <td>{document.doc_data.serialNumber.toLocaleUpperCase()}</td>
                 <td>{document.doc_data.user}</td>
-                <td>{document.doc_data.company}</td>
-                <td>{document.doc_data.dateEndLoan}</td>
+                <td>{document.doc_data.company}</td>                
                 <td>{document.doc_data.status.toLocaleUpperCase()}</td>
               </tr>);
             })}
