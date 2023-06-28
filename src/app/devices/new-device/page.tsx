@@ -118,14 +118,17 @@ export default function NewDevices() {
                 <option value=''></option>
                 <option value='desktop'>Desktop</option>
                 <option value='notebook'>Notebook</option>
+                <option value='carregador notebook'>Carregador Notebook</option>
                 <option value='monitor'>Monitor</option>
                 <option value='impressora'>Impressora</option>
                 <option value='smartphone'>Smartphone</option>
+                <option value='carregador smartphone'>Carregador Smartphone</option>
                 <option value='suporte'>Suporte</option>
                 <option value='headset'>Headset</option>
                 <option value='mouse'>Mouse</option>
                 <option value='teclado'>Teclado</option>
                 <option value='leitor_cod'>Leitor de Cod. de Barras</option>
+                <option value='adaptador_wifi'>Adaptador Wifi</option>
               </select>
             </div>
 
