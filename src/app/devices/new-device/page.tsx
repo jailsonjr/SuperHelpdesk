@@ -15,9 +15,18 @@ async function getDataUsers() {
   return dataResult
 }
 
+
+async function getDataBrands() {
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/brands`;
+  const result = await fetch(uri);
+  const dataResult = await result.json();
+  return dataResult
+}
+
 export default function NewDevices() {
 
   const userData = useSWR<any[]>('get-users',getDataUsers);
+  const brandsData = useSWR<any[]>('get-brands',getDataBrands);
 
   const [showModal, setShowModal] = useState('none');
   const [IDTreves, setIdTreves] = useState('');
@@ -122,7 +131,12 @@ export default function NewDevices() {
 
             <div>
               <span>Marca - Modelo *</span>
-              <input type='text' placeholder='Informe a Marca - Modelo' required onChange={(e) => {setBrand(e.target.value)}}/>
+              <input type='text' placeholder='Informe a Marca - Modelo' required onChange={(e) => {setBrand(e.target.value)}} list='brands'/>
+              <datalist id='brands'>
+                {brandsData.data && brandsData.data.map((brands) => {
+                  return <option key={brands.doc_data.model} value={brands.doc_data.brand + ' ' + brands.doc_data.model}>{brands.doc_data.brand + ' ' + brands.doc_data.model}</option>
+                })}
+              </datalist>
             </div>
 
             <div>
