@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link';
-import styles from './devices.module.css';
+import styles from './users.module.css';
 import Image from 'next/image';
 import { newDeviceType } from '@/data/devices';
 import useSWR from 'swr'
@@ -14,18 +14,20 @@ type resultType = {
 }
 
 async function getData() {
-  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`;
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
   const result = await fetch(uri);
   const dataResult = await result.json();
   return dataResult
 }
 
-export default function Devices() {
+export default function Users() {
 
-  const { data, isLoading } = useSWR<any[]>('get-devices',getData);
+  const { data, isLoading } = useSWR<any[]>('get-users',getData);
   const [showModal, setShowModal] = useState('none');
 
   let result = {length: data?.length, data};
+
+  console.log(result);
 
   useEffect(()=> {
     if(isLoading){
@@ -40,24 +42,22 @@ export default function Devices() {
     <main className={styles.main}>
       <MainMenu />
       <div className={styles.submenu}>
-        <div className={styles.title}>Equipamentos</div>
-        <input type='text' placeholder='Pesquise por ID, Modelo, Serial ....' className={styles.field}/>
+        <div className={styles.title}>Usuários</div>
+        <input type='text' placeholder='Pesquise por Nome, email ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>{result.length} equipamentos</span>
-          <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
+          <span className={styles.total}>{result.length} usuários</span>
+          <Link href='/users/new-user' className={styles.newRegister}>Novo usuário</Link>
         </div>
       </div>
       <div className={styles.grid}>
         <table border-collapse="collapse">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
               <th>Planta</th>
-              <th>Marca/Modelo</th>
-              <th>Serial</th>
-              <th>Usuario</th>
-              <th>Proprietário</th>
-              <th>Fim do Contrato</th>
+              <th>Departamento</th>
+              <th>Cargo</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -65,14 +65,12 @@ export default function Devices() {
             
             {result && result.data?.map((document) => {
               return (
-              <tr key={document.doc_data.id_treves}>
-                <td>{document.doc_data.id_treves.toLocaleUpperCase()}</td>
+              <tr key={document.doc_data.email}>
+                <td>{document.doc_data.name.toLocaleUpperCase()}</td>
+                <td>{document.doc_data.email}</td>
                 <td>{document.doc_data.filial}</td>
-                <td>{document.doc_data.brandModel}</td>
-                <td>{document.doc_data.serialNumber.toLocaleUpperCase()}</td>
-                <td>{document.doc_data.user}</td>
-                <td>{document.doc_data.company}</td>
-                <td>{document.doc_data.dateEndLoan}</td>
+                <td>{document.doc_data.departamento}</td>
+                <td>{document.doc_data.cargo}</td>
                 <td>{document.doc_data.status.toLocaleUpperCase()}</td>
               </tr>);
             })}

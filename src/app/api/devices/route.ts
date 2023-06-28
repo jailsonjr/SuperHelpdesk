@@ -1,6 +1,6 @@
 import {  NextResponse, NextRequest } from "next/server";
 
-import { getDevices, insertDevices, newDeviceType } from '@/app/data/devices';
+import { getDevices, insertDevices, newDeviceType } from '@/data/devices';
 
 export async function GET() {
   const result = await getDevices();

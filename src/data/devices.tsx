@@ -1,4 +1,4 @@
-import db from '@/app/lib/firebase';
+import db from '@/lib/firebase';
 
 export type newDeviceType = {
   id_treves: string,
@@ -6,7 +6,7 @@ export type newDeviceType = {
   brandModel: string,
   serialNumber: string,
   status: string,
-  filial: string,
+  filial?: string,
   user?: string,
   dateDelivered?: Date,
   contractCompany?: string,

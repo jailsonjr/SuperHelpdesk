@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import LoadingIcon from '../../../../public/icons/loading.gif'
 import { FormEvent, useState } from 'react'
 import useSWR from 'swr'
+import MainMenu from '@/components/mainmenu/mainmenu';
 
 async function getDataUsers() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
@@ -16,8 +17,7 @@ async function getDataUsers() {
 
 export default function NewDevices() {
 
-  const { data } = useSWR<any[]>('get-users',getDataUsers);
-  console.log(data);
+  const userData = useSWR<any[]>('get-users',getDataUsers);
 
   const [showModal, setShowModal] = useState('none');
   const [IDTreves, setIdTreves] = useState('');
@@ -87,38 +87,7 @@ export default function NewDevices() {
   return (
     <>
     <main className={styles.main}>
-      <div className={styles.mainMenuBackground}>
-      <div className={styles.mainMenu}>
-          <div className={styles.logo}>
-                  <Image 
-                        src="/logo.png"
-                        alt="Logo of treves" 
-                        width={148}
-                        height={25}
-                        className={styles.logo}
-                        priority
-                    />
-          </div>
-          <nav className={styles.nav}>
-            <Link href='/dash' className={styles.navlink}>
-              <span className={`material-symbols-outlined ${styles.navicon}`}>grid_view</span>
-              <span className={styles.navtext}>Dashboard</span>
-            </Link>
-            <Link href='/users' className={styles.navlink}>
-              <span className={`material-symbols-outlined ${styles.navicon}`}>person</span>
-              <span className={styles.navtext}>Users</span>
-            </Link>
-            <Link href='/devices' className={styles.navlink}>
-              <span className={`material-symbols-outlined ${styles.navicon}`}>computer</span>
-              <span className={styles.navtext}>Devices</span>
-            </Link>
-            <Link href='/contract' className={styles.navlink}>
-              <span className={`material-symbols-outlined ${styles.navicon}`}>contract</span>
-              <span className={styles.navtext}>Contracts</span>
-            </Link>
-          </nav>
-      </div>
-      </div>
+      <MainMenu />
       <div className={styles.submenu}>
         <div className={styles.title}>Novo Equipamento</div>
         <Link href='/devices' className={styles.buttonCancel}>Cancelar</Link>
@@ -176,8 +145,8 @@ export default function NewDevices() {
           <fieldset>
 
             <div>
-              <span>Filial *</span>
-              <select name='filial' placeholder='status' required onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
+              <span>Filial</span>
+              <select name='filial' placeholder='status'  onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
                 <option value=''></option>
                 <option value='0101 - Quatro Barras'>0101 - Quatro Barras</option>
                 <option value='0102 - Caçapava'>0102 - Caçapava</option>
@@ -193,8 +162,8 @@ export default function NewDevices() {
               <span>E-mail do usuário ou Local da Produção</span>
               <input type='text' placeholder='Informe o usuário' onChange={(e) => {setUser(e.target.value)}} list='users' />
               <datalist id='users'>
-                {data && data.map((user) => {
-                  return <option key={user.doc_data.name} value={user.doc_data.name}>{user.doc_data.name}</option>
+                {userData.data && userData.data.map((user) => {
+                  return <option key={user.doc_data.email} value={user.doc_data.email}>{user.doc_data.email}</option>
                 })}
               </datalist>
             </div>
@@ -210,22 +179,22 @@ export default function NewDevices() {
           <fieldset>
 
             <div>
-              <span>Empresa *</span>
-              <select name='proprietary' placeholder='Empresa' required onChange={(e) => {setCompany(e.target.value)}} defaultValue=''>
+              <span>Empresa </span>
+              <select name='proprietary' placeholder='Empresa' onChange={(e) => {setCompany(e.target.value)}} defaultValue=''>
                 <option value=''></option>
-                <option value='P01'>Treves do Brasil</option>
-                <option value='P02'>Trecin Industrial</option>
-                <option value='P03'>Hexanet</option>
-                <option value='P04'>Treves SAS</option>
-                <option value='P05'>Copel</option>
-                <option value='P06'>Algar</option>
-                <option value='P07'>Embratel</option>
-                <option value='P08'>FCM</option>
-                <option value='P09'>Selbetti</option>
-                <option value='P10'>Ricohpy</option>
-                <option value='P11'>Telefonica</option>
-                <option value='P12'>As Informatica</option>
-                <option value='P13'>Bluepex</option>
+                <option value='P01 - Treves do Brasil'>Treves do Brasil</option>
+                <option value='P02 - Trecin Industrial'>Trecin Industrial</option>
+                <option value='P03 - Hexanet'>Hexanet</option>
+                <option value='P04 - Treves SAS'>Treves SAS</option>
+                <option value='P05 - Copel'>Copel</option>
+                <option value='P06 - Algar'>Algar</option>
+                <option value='P07 - Embratel'>Embratel</option>
+                <option value='P08 - FCM'>FCM</option>
+                <option value='P09 - Selbetti'>Selbetti</option>
+                <option value='P10 - Ricohpy'>Ricohpy</option>
+                <option value='P11 - Telefonica'>Telefonica</option>
+                <option value='P12 - As Informatica'>As Informatica</option>
+                <option value='P13 - Bluepex'>Bluepex</option>
               </select>
             </div>
 

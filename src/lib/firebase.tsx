@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 
-const credentials = require('@/app/config/firebase-key.json')
+const credentials = require('@/config/firebase-key.json')
 
 if(!admin.apps.length){
     admin.initializeApp({

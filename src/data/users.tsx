@@ -1,4 +1,4 @@
-import db from '@/app/lib/firebase';
+import db from '@/lib/firebase';
 
 export type newUserType = {
   id_treves: string,
@@ -19,3 +19,9 @@ export const getUsers = async () => {
   });
   return resultData;
 }
+
+export const insertUsers = async (userdata: newUserType) => {
+  const usersRef = db.collection('users').doc();
+  return await usersRef.set(userdata);
+}
+
