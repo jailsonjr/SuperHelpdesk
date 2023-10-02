@@ -57,7 +57,7 @@ export default function Login() {
                 </div>
             </form>
             <footer className={styles.footerWrapper}>
-                <span className={styles.rights}>2023. Todos direitos reservados.</span>
+                <span className={styles.rights}>2023. Todos direitos reservados. TDB</span>
             </footer>
         </section>
     </main>
