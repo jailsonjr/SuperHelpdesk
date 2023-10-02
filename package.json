@@ -8,7 +8,8 @@
     "build": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate:new": "knex --knexfile src/config/knex.config.ts migrate:make"
+    "migrate:new": "knex --knexfile src/config/knex.config.ts migrate:make",
+    "migrate:run": "knex --knexfile src/config/knex.config.ts migrate:latest"
   },
   "dependencies": {
     "@types/node": "20.3.1",
