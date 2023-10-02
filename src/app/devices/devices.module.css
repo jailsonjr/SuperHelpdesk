@@ -31,7 +31,7 @@
 }
 
 .newRegister:hover {
-  background-color: #0A2D6C;
+  background-color: #0080FF;
 }
 
 .filter {
@@ -114,6 +114,13 @@
   background-color: #f5f5f5;
 }
 
+.sinResult {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.8rem;
+  color: #999;
+}
+
 .new_form {
   padding: 1.875rem;
 }
@@ -146,7 +153,7 @@
 
 .new_form fieldset input,.new_form fieldset select,.new_form fieldset textarea{
   border: 2px solid #ddd;
-  background-color: #ddd;
+  background-color: #efefef;
   padding: 1rem;
   border-radius: 3px;
   min-width: 200px;
@@ -154,7 +161,7 @@
 }
 
 .new_form fieldset input:active, .new_form fieldset input:hover {
-  border: 2px solid #0A2D6C;
+  border: 2px solid #0080FF;
 }
 
 .new_form fieldset textarea {

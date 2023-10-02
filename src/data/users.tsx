@@ -1,7 +1,7 @@
-import db from '@/lib/firebase';
+import db from '@/lib/knex';
 
 export type newUserType = {
-  id_treves: string,
+  user_id: string,
   user_name: string,
   user_email: string,
   user_department: string,

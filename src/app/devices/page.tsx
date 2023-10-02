@@ -2,16 +2,10 @@
 import Link from 'next/link';
 import styles from './devices.module.css';
 import Image from 'next/image';
-import { newDeviceType } from '@/data/devices';
 import useSWR from 'swr'
 import { useEffect, useState } from 'react';
 import LoadingIcon from '../../../public/icons/loading.gif';
 import MainMenu from '@/components/mainmenu/mainmenu';
-
-type resultType = {
-  doc_id: string,
-  doc_data: newDeviceType
-}
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`;
@@ -25,7 +19,7 @@ export default function Devices() {
   const { data, isLoading } = useSWR<any[]>('get-devices',getData);
   const [showModal, setShowModal] = useState('none');
 
-  let result = {length: data?.length, data};
+  let result = {length: data?.length || 0, data};
 
   useEffect(()=> {
     if(isLoading){
@@ -43,11 +37,12 @@ export default function Devices() {
         <div className={styles.title}>Equipamentos</div>
         <input type='text' placeholder='Pesquise por ID, Modelo, Serial ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>{result.length} equipamentos</span>
+          {result.length > 0 ? <span className={styles.total}>{result.length} equipamentos</span> : <></>}
           <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>
       <div className={styles.grid}>
+      {result.length > 0 ? 
         <table border-collapse="collapse">
           <thead>
             <tr>
@@ -62,7 +57,6 @@ export default function Devices() {
             </tr>
           </thead>
           <tbody>
-            
             {result && result.data?.map((document) => {
               return (
               <tr key={document.doc_data.id_treves}>
@@ -77,7 +71,7 @@ export default function Devices() {
               </tr>);
             })}
           </tbody>
-        </table> 
+        </table> : <p className={styles.sinResult}>Sem equipamentos cadastrados</p> } 
       </div>
     </main>
         <div style={{display: showModal}} className={styles.modal}>

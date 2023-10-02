@@ -11,7 +11,7 @@ export default function MainMenu() {
                     <Image 
                           src="/logo.png"
                           alt="Logo of treves" 
-                          width={148}
+                          width={77}
                           height={25}
                           className={styles.logo}
                           priority

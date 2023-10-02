@@ -1,9 +1,9 @@
 'use client'
 import Link from 'next/link'
-import styles from '../users.module.css'
+import styles from '@/app/users/users.module.css'
 import Image from 'next/image'
-import { useRouter as useNav} from 'next/navigation'
-import LoadingIcon from '../../../../public/icons/loading.gif'
+import { useRouter } from 'next/navigation'
+import LoadingIcon from '../../../../../public/icons/loading.gif'
 import { FormEvent, useState } from 'react'
 import MainMenu from '@/components/mainmenu/mainmenu';
 
@@ -14,7 +14,7 @@ async function getDataUsers() {
   return dataResult
 }
 
-export default function NewUsers() {
+export default function EditUsers({ params }: {params:any}) {
 
   const [showModal, setShowModal] = useState('none');
   const [name, setName] = useState('');
@@ -26,13 +26,16 @@ export default function NewUsers() {
   const [contract, setContract] = useState('');
   const [OBS, setOBS] = useState('');
 
-  const nav = useNav();
+  const router = useRouter();
+
+  console.log(params.user_id);
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
     setShowModal('block');
 
     const dataNow = new Date();
+    
 
     const dataRaw = {
       name,
@@ -57,7 +60,7 @@ export default function NewUsers() {
     if(request.ok){
       alert('Cadastrado');
       setShowModal('none');
-      nav.push('/users?registered=ok')
+      router.push('/users?registered=ok')
     }
   }
 
@@ -66,7 +69,7 @@ export default function NewUsers() {
     <main className={styles.main}>
       <MainMenu />
       <div className={styles.submenu}>
-        <div className={styles.title}>Novo usuário</div>
+        <div className={styles.title}>Editar usuário</div>
         <Link href='/users' className={styles.buttonCancel}>Cancelar</Link>
       </div>
       <div className={styles.grid}>
@@ -82,7 +85,7 @@ export default function NewUsers() {
 
             <div>
               <span>E-mail *</span>
-              <input type='text' placeholder='Informe o email' required onChange={(e) => {setEmail(e.target.value)}}/>
+              <input type='text' placeholder='Informe o email' required onChange={(e) => {setEmail(e.target.value)}} value={email}/>
             </div>
 
             <div>

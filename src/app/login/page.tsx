@@ -10,8 +10,8 @@ export default function Login() {
                 <div className={styles.headerLogo}>
                     <Image 
                         src="/logo.png"
-                        alt="Logo of treves" 
-                        width={358}
+                        alt="Logo of Superhelpdesk" 
+                        width={185}
                         height={60}
                         className={styles.logo}
                     />

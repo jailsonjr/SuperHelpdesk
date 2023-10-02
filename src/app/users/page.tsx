@@ -2,16 +2,10 @@
 import Link from 'next/link';
 import styles from './users.module.css';
 import Image from 'next/image';
-import { newDeviceType } from '@/data/devices';
 import useSWR from 'swr'
 import { useEffect, useState } from 'react';
 import LoadingIcon from '../../../public/icons/loading.gif';
 import MainMenu from '@/components/mainmenu/mainmenu';
-
-type resultType = {
-  doc_id: string,
-  doc_data: newDeviceType
-}
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
@@ -25,9 +19,7 @@ export default function Users() {
   const { data, isLoading } = useSWR<any[]>('get-users',getData);
   const [showModal, setShowModal] = useState('none');
 
-  let result = {length: data?.length, data};
-
-  console.log(result);
+  let result = {length: data?.length || 0, data};
 
   useEffect(()=> {
     if(isLoading){
@@ -45,11 +37,12 @@ export default function Users() {
         <div className={styles.title}>Usuários</div>
         <input type='text' placeholder='Pesquise por Nome, email ....' className={styles.field}/>
         <div>
-          <span className={styles.total}>{result.length} usuários</span>
+          {result.length > 0 ? <span className={styles.total}>{result.length} usuários</span> : <></>}
           <Link href='/users/new-user' className={styles.newRegister}>Novo usuário</Link>
         </div>
       </div>
       <div className={styles.grid}>
+      {result.length > 0 ? 
         <table border-collapse="collapse">
           <thead>
             <tr>
@@ -66,7 +59,7 @@ export default function Users() {
             {result && result.data?.map((document) => {
               return (
               <tr key={document.doc_data.email}>
-                <td>{document.doc_data.name.toLocaleUpperCase()}</td>
+                <td><Link href={`/users/edit-user/${document.doc_id}`}>{document.doc_data.name.toLocaleUpperCase()}</Link></td>
                 <td>{document.doc_data.email}</td>
                 <td>{document.doc_data.filial}</td>
                 <td>{document.doc_data.departamento}</td>
@@ -75,7 +68,8 @@ export default function Users() {
               </tr>);
             })}
           </tbody>
-        </table> 
+        </table> : <p className={styles.sinResult}>Sem usuários cadastrados</p> } 
+        
       </div>
     </main>
         <div style={{display: showModal}} className={styles.modal}>

@@ -6,7 +6,8 @@
   --font-mono: 'Inter',ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-  --main-color: #1E6CBA;
+  --main-color: #0080FF;
+  --background-color: #F1F1F1;
 }
 
 * {
@@ -20,10 +21,17 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: var(--font-mono);
-  background-color: #eaeaea;
+  background-color: var(--background-color);
 }
 
 input {
   font-family: var(--font-mono);
 }
 
+input:focus {
+  outline: none;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+}

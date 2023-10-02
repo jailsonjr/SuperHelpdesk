@@ -64,6 +64,13 @@
   float: left;
 }
 
+.sinResult {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.8rem;
+  color: #999;
+}
+
 .grid {
   background-color: #fff;
   box-shadow: 1px 1px 3px #ccc;

@@ -106,8 +106,8 @@ export default function NewDevices() {
           <h3 className={styles.subtitle}>Informações do Dispositivo</h3>
           <fieldset>  
             <div>
-              <span>ID Treves *</span>
-              <input type='text' placeholder='ID Treves' 
+              <span>ID do Equipamento *</span>
+              <input type='text' placeholder='ID do Equipamento' 
               onChange={(e) => {setIdTreves(e.target.value.toLocaleUpperCase())}}
               name='id_treves' required/>
             </div>

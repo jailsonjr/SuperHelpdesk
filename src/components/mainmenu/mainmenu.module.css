@@ -29,7 +29,6 @@
     display: flex;
     text-decoration: none;
     border-radius: 3px;
-  
   }
   
   .navicon {
@@ -46,13 +45,13 @@
   }
   
   .navlink:hover {
-      background-color: #0A2D6C;
+      background-color: #fafafa;
   }
   
   .navlink:hover .navicon{
-    color: #fff;
+    color: #0080FF;
   }
   
   .navlink:hover .navtext{
-    color: #fff;
+    color: #0080FF;
   }
