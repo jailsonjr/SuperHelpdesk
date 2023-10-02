@@ -28,17 +28,10 @@ export type newDeviceType = {
 };
 
 export const insertDevices = async (devicedata: newDeviceType) => {
-  const devicesRef = db.collection('devices').doc();
-  return await devicesRef.set(devicedata);
+  return [];
 }
 
 export const getDevices = async () => {
   let resultData:Array<{}> = [];
-  const devicesRef = db.collection('devices');
-  const result = await devicesRef.get();
-  result.docs.forEach((doc) => {
-    let data = {doc_id: doc.id, doc_data: doc.data()};
-    if(data){resultData.push(data)}
-  });
   return resultData;
 }
