@@ -1,4 +1,3 @@
-import db from '@/lib/knex';
 
 export type newDeviceType = {
   id_treves: string,

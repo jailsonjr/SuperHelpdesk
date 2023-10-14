@@ -1,4 +1,4 @@
-import db from '@/lib/knex';
+
 
 export type newBrandType = {
   brand: string,
