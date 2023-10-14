@@ -57,14 +57,15 @@ export default function Users() {
           <tbody>
             
             {result && result.data?.map((document) => {
+              console.log(document)
               return (
-              <tr key={document.doc_data.email}>
-                <td><Link href={`/users/edit-user/${document.doc_id}`}>{document.doc_data.name.toLocaleUpperCase()}</Link></td>
-                <td>{document.doc_data.email}</td>
-                <td>{document.doc_data.filial}</td>
-                <td>{document.doc_data.departamento}</td>
-                <td>{document.doc_data.cargo}</td>
-                <td>{document.doc_data.status.toLocaleUpperCase()}</td>
+              <tr key={document.user_email}>
+                <td><Link href={`/users/edit-user/${document.user_id}`}>{document.user_name.toLocaleUpperCase()}</Link></td>
+                <td>{document.user_email}</td>
+                <td>{document.user_filial}</td>
+                <td>{document.user_department}</td>
+                <td>{document.user_position}</td>
+                <td>{document.user_active.toLocaleUpperCase()}</td>
               </tr>);
             })}
           </tbody>

@@ -23,7 +23,6 @@ export default function NewUsers() {
   const [filial, setFilial] = useState('');
   const [departamento, setDepartamento] = useState('');
   const [cargo, setCargo] = useState('');
-  const [contract, setContract] = useState('');
   const [OBS, setOBS] = useState('');
 
   const nav = useNav();
@@ -41,12 +40,7 @@ export default function NewUsers() {
       filial,
       departamento,
       cargo,
-      contract,
-      OBS,
-      timestamps: {
-        created_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes(),
-        updated_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes()
-      }
+      OBS
     }
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
@@ -94,6 +88,7 @@ export default function NewUsers() {
               </select>
             </div>
           </fieldset>
+          
           <h3 className={styles.subtitle}>Informações do Departamento / Local</h3>
           <fieldset>
 
@@ -108,15 +103,6 @@ export default function NewUsers() {
                 <option value='0105 - Residente - Renault'>0105 - Residente - Renault</option>
                 <option value='0106 - Residente - VW'>0106 - Residente - VW</option>
                 <option value='0107 - Residente - Honda'>0107 - Residente - Honda</option>
-              </select>
-            </div>
-
-            <div>
-              <span>Contrato do usuário</span>
-              <select name='tipo_contrato' placeholder='Tipo de Contrato' onChange={(e) => {setContract(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='D01 - Treves'>Treves</option>
-                <option value='D02 - Terceiro'>Terceiro</option>
               </select>
             </div>
 

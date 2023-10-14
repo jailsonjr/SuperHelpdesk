@@ -30,9 +30,9 @@ export default function MainMenu() {
                 <span className={`material-symbols-outlined ${styles.navicon}`}>computer</span>
                 <span className={styles.navtext}>Equipamentos</span>
               </Link>
-              <Link href='/lines' className={styles.navlink}>
-                <span className={`material-symbols-outlined ${styles.navicon}`}>call</span>
-                <span className={styles.navtext}>Linhas</span>
+              <Link href='/contracts' className={styles.navlink}>
+                <span className={`material-symbols-outlined ${styles.navicon}`}>contract</span>
+                <span className={styles.navtext}>Contratos</span>
               </Link>
             </nav>
         </div>
