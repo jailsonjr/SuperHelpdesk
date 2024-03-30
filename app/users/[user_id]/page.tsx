@@ -20,11 +20,11 @@ export default function EditUsers({ params }: {params:any}) {
     `${process.env.NEXT_PUBLIC_URL_BASE}/api/users/`,
     params.user_id
   ], getDataUser);
+
   const [showModal, setShowModal] = useState('none');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
-  const [filial, setFilial] = useState('');
   const [departamento, setDepartamento] = useState('');
   const [cargo, setCargo] = useState('');
   const [OBS, setOBS] = useState('');
@@ -47,6 +47,13 @@ export default function EditUsers({ params }: {params:any}) {
     event.preventDefault(); 
     setShowModal('block');
 
+    setShowModal('none')
+    setName(name);
+    setEmail(email);
+    setCargo(departamento);
+    setStatus(status);
+    setOBS(OBS);
+
     const dataNow = new Date();
     
 
@@ -54,23 +61,18 @@ export default function EditUsers({ params }: {params:any}) {
       name,
       email,
       status,
-      filial,
       departamento,
       cargo,
-      OBS,
-      timestamps: {
-        created_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes(),
-        updated_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes()
-      }
+      OBS
     }
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(dataRaw)
     })
 
     if(request.ok){
-      alert('Cadastrado');
+      alert('Atualizado');
       setShowModal('none');
       nav.push('/users?registered=ok')
     }
@@ -103,10 +105,9 @@ export default function EditUsers({ params }: {params:any}) {
 
             <div>
               <span>Status *</span>
-              <select name='status' placeholder='status' required onChange={(e) => {setStatus(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='ativo'>Ativo</option>
-                <option value='desligado'>Desligado</option>
+              <select name='status' placeholder='status' required onChange={(e) => {setStatus(e.target.value)}} defaultValue={status}>
+                { status == "ativo" ? <option value='ativo' selected >Ativo</option> : <option value='ativo' >Ativo</option> }
+                { status == "desligado" ? <option value='desligado' selected >Desligado</option> : <option value='desligado' >Desligado</option> }
               </select>
             </div>
           </fieldset>
@@ -114,22 +115,8 @@ export default function EditUsers({ params }: {params:any}) {
           <fieldset>
 
             <div>
-              <span>Filial *</span>
-              <select name='filial' placeholder='Filial do usuario' required onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='0101 - Quatro Barras'>0101 - Quatro Barras</option>
-                <option value='0102 - Caçapava'>0102 - Caçapava</option>
-                <option value='0103 - Trecin'>0103 - Trecin</option>
-                <option value='0104 - Betim'>0104 - Betim</option>
-                <option value='0105 - Residente - Renault'>0105 - Residente - Renault</option>
-                <option value='0106 - Residente - VW'>0106 - Residente - VW</option>
-                <option value='0107 - Residente - Honda'>0107 - Residente - Honda</option>
-              </select>
-            </div>
-
-            <div>
               <span>Departamento</span>
-              <select name='departamento' placeholder='Departamento' onChange={(e) => {setDepartamento(e.target.value)}} defaultValue=''>
+              <select name='departamento' placeholder='Departamento' onChange={(e) => {setDepartamento(e.target.value)}} >
                 <option value=''></option>
                 <option value='D01 - Logistica'>Logistica</option>
                 <option value='D02 - Fiscal'>Fiscal</option>

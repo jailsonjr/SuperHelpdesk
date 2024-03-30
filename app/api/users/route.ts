@@ -1,6 +1,6 @@
 import {  NextResponse, NextRequest } from "next/server";
 
-import { getUsers, insertUsers, newUserType} from '../../../data/users';
+import { getUsers, insertUsers, newUserType, updateUser} from '../../../data/users';
 
 export async function GET() {
   const result = await getUsers();
@@ -12,4 +12,11 @@ export async function POST(req: NextRequest) {
   const insertData = await insertUsers(dataRaw);
 
   return NextResponse.json(insertData);
+}
+
+export async function PUT(req: NextRequest) {
+  const dataRaw:newUserType = await req.json();
+  console.log("DADOS UPDATE: ", dataRaw)
+  const updateData = await updateUser(dataRaw);
+  return NextResponse.json(updateData);
 }

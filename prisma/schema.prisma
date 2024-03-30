@@ -13,7 +13,6 @@ model users {
   user_email      String  @unique(map: "users_user_email_unique") @db.VarChar(255)
   user_department String  @db.VarChar(150)
   user_position   String? @db.VarChar(100)
-  user_filial      String? @db.VarChar(100)
   user_active     String @db.VarChar(10) @default("active")
   user_obs        String? @db.VarChar(255) 
   createdAt       DateTime  @default(now()) @db.Timestamptz(3)

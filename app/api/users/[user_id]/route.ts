@@ -1,6 +1,6 @@
 import {  NextResponse, NextRequest } from "next/server";
 
-import { getUserByID } from '../../../../data/users';
+import { getUserByID} from '../../../../data/users';
 
 export async function GET(req: NextRequest) {
     let userID = req.url.split("/")[5];
@@ -10,3 +10,4 @@ export async function GET(req: NextRequest) {
     }
     return NextResponse.json(resultData);    
 }
+

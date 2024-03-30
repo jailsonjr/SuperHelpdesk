@@ -19,10 +19,9 @@ export default function NewUsers() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
-  const [filial, setFilial] = useState('');
-  const [departamento, setDepartamento] = useState('');
-  const [cargo, setCargo] = useState('');
-  const [OBS, setOBS] = useState('');
+  const [departament, setDepartament] = useState('');
+  const [position, setPosition] = useState('');
+  const [obs, setOBS] = useState('');
 
   const nav = useNav();
 
@@ -36,18 +35,20 @@ export default function NewUsers() {
       name,
       email,
       status,
-      filial,
-      departamento,
-      cargo,
-      OBS
+      departament,
+      position,
+      obs
     }
 
-    const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
+    console.log("DADOS REQUISICAO:", dataRaw)
+
+
+    const requestSave = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
       method: 'POST',
       body: JSON.stringify(dataRaw)
     })
 
-    if(request.ok){
+    if(requestSave.ok){
       alert('Cadastrado');
       setShowModal('none');
       nav.push('/users?registered=ok')
@@ -73,7 +74,7 @@ export default function NewUsers() {
 
             <div>
               <span>E-mail *</span>
-              <input type='text' placeholder='Informe o email' required onChange={(e) => {setEmail(e.target.value)}}/>
+              <input type='text' name='email' placeholder='Informe o email' required onChange={(e) => {setEmail(e.target.value)}}/>
             </div>
 
             <div>
@@ -86,26 +87,12 @@ export default function NewUsers() {
             </div>
           </fieldset>
           
-          <h3 className={styles.subtitle}>Informações do Departamento / Local</h3>
+          <h3 className={styles.subtitle}>Informações do Departamento</h3>
           <fieldset>
 
             <div>
-              <span>Filial *</span>
-              <select name='filial' placeholder='Filial do usuario' required onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='0101 - Quatro Barras'>0101 - Quatro Barras</option>
-                <option value='0102 - Caçapava'>0102 - Caçapava</option>
-                <option value='0103 - Trecin'>0103 - Trecin</option>
-                <option value='0104 - Betim'>0104 - Betim</option>
-                <option value='0105 - Residente - Renault'>0105 - Residente - Renault</option>
-                <option value='0106 - Residente - VW'>0106 - Residente - VW</option>
-                <option value='0107 - Residente - Honda'>0107 - Residente - Honda</option>
-              </select>
-            </div>
-
-            <div>
               <span>Departamento</span>
-              <select name='departamento' placeholder='Departamento' onChange={(e) => {setDepartamento(e.target.value)}} defaultValue=''>
+              <select name='departament' placeholder='Departament' onChange={(e) => {setDepartament(e.target.value)}} defaultValue=''>
                 <option value=''></option>
                 <option value='D01 - Logistica'>Logistica</option>
                 <option value='D02 - Fiscal'>Fiscal</option>
@@ -129,12 +116,12 @@ export default function NewUsers() {
 
             <div>
               <span>Cargo</span>
-              <input type='text' placeholder='Informe o cargo' onChange={(e) => {setCargo(e.target.value)}}/>
+              <input type='text' placeholder='Informe o cargo' name='position' onChange={(e) => {setPosition(e.target.value)}}/>
             </div>
           </fieldset>
             <fieldset>
               <span>Observação</span>
-              <textarea placeholder='Informações extras' onChange={(e) => {setOBS(e.target.value)}}/>
+              <textarea placeholder='Informações extras' name='obs' onChange={(e) => {setOBS(e.target.value)}}/>
             </fieldset>
 
             <fieldset>

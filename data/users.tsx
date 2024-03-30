@@ -1,13 +1,15 @@
 import {PrismaClient} from "@prisma/client"
 
 export type newUserType = {
-  user_id: string,
-  user_name: string,
-  user_email: string,
-  user_department: string,
-  user_position?: string,
-  user_filial?: string
+  user_id?: string,
+  name: string,
+  email: string,
+  departament: string,
+  position?: string,
+  status?: string,
+  obs?: string
 };
+
 
 const dbOrm = new PrismaClient();
 
@@ -24,13 +26,44 @@ export const getUserByID = async(user_id: string) => {
       user_id: user_id
     }
   });
-  console.log(resultData);
   return resultData;
 }
 
 export const insertUsers = async (userdata: newUserType) => {
-  return await [];
+  let resultData = null;
+  console.log("Dados: ", userdata.departament)
+  resultData = await dbOrm.users.create({
+    data: {
+      user_name: userdata.name,
+      user_email: userdata.email,
+      user_department: userdata.departament,
+      user_position: userdata.position,
+      user_active: userdata.status,
+      user_obs: userdata.obs
+    }
+  });
+  return resultData;
 }
 
+
+export const updateUser = async (userdata: newUserType) => {
+  let resultData = null;
+  console.log("Dados: ", userdata)
+  resultData = await dbOrm.users.update({
+    where: {
+      user_email: userdata.email,
+    },
+    data: {
+      user_name: userdata.name,
+      user_email: userdata.email,
+      user_department: userdata.departament,
+      user_position: userdata.position,
+      user_active: userdata.status,
+      user_obs: userdata.obs
+    }
+  });
+
+  return resultData;
+}
 
 
