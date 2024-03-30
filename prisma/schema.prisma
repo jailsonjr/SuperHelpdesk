@@ -15,6 +15,7 @@ model users {
   user_position   String? @db.VarChar(100)
   user_filial      String? @db.VarChar(100)
   user_active     String @db.VarChar(10) @default("active")
+  user_obs        String? @db.VarChar(255) 
   createdAt       DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
 }

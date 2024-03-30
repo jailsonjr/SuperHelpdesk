@@ -1,0 +1,70 @@
+
+.nav {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 11.75rem;
+  padding-top: 2rem;
+}
+
+.buttonNewWapper {
+  max-width: 11.75rem;
+  background-color: var(--main-color);
+  display: flex;
+  padding: 0.5rem 1rem;  
+  border-radius: 3px;
+  margin: 1.875rem 0;
+  color: #fff;
+}
+
+.buttonNewWapper:hover {
+  cursor: pointer;
+  background-color: var(--main-lighter-color);
+}
+
+.buttonNewIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 1.5rem;
+}
+
+.buttonNewText {
+  font-size: .875rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin-top: .2rem;
+}
+
+.navlink {
+  padding: 0.7rem 1rem;
+  display: flex;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.navicon {
+  color: #444;
+  width: 24px;
+  height: 24px;
+}
+
+.navtext {
+  vertical-align: middle;
+  margin-left: 1.5rem;
+  font-size: 0.875rem;
+  margin-top: 0.2rem;
+  color: #333;
+  font-weight: 500
+}
+
+.navlink:hover {
+    background-color: #eaeaea;
+}
+
+.navlink:hover .navicon{
+  color: #0080FF;
+}
+
+.navlink:hover .navtext{
+  color: #0080FF;
+}

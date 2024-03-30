@@ -1,0 +1,15 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.twoColumns {
+  display: flex;
+}
+
+.mainContent {
+  margin-left: 2rem;
+  padding-top: 1.9rem;
+  width: 100%;
+}
