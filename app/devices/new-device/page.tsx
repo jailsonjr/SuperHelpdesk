@@ -26,8 +26,7 @@ export default function NewDevices() {
   const userData = useSWR<any[]>('get-users',getDataUsers);
   const brandsData = useSWR<any[]>('get-brands',getDataBrands);
 
-  const [showModal, setShowModal] = useState('none');
-  const [IDTreves, setIdTreves] = useState('');
+  const [id_device, setIdDevice] = useState('');
   const [type, setType] = useState('');
   const [brand, setBrand] = useState('');
   const [ns, setNs] = useState('');
@@ -49,12 +48,11 @@ export default function NewDevices() {
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
-    setShowModal('block');
 
     const dataNow = new Date();
 
     const dataRaw = {
-      id_treves: IDTreves,
+      id_device,
       type,
       brandModel: brand,
       serialNumber: ns,
@@ -86,7 +84,6 @@ export default function NewDevices() {
 
     if(request.ok){
       alert('Cadastrado');
-      setShowModal('none');
       nav.push('/devices?registered=ok')
     }
   }
@@ -105,8 +102,8 @@ export default function NewDevices() {
             <div>
               <span>ID do Equipamento *</span>
               <input type='text' placeholder='ID do Equipamento' 
-              onChange={(e) => {setIdTreves(e.target.value.toLocaleUpperCase())}}
-              name='id_treves' required/>
+              onChange={(e) => {setIdDevice(e.target.value.toLocaleUpperCase())}}
+              name='id_device' required/>
             </div>
 
             <div>
@@ -159,21 +156,7 @@ export default function NewDevices() {
           <fieldset>
 
             <div>
-              <span>Filial</span>
-              <select name='filial' placeholder='status'  onChange={(e) => {setFilial(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='0101 - Quatro Barras'>0101 - Quatro Barras</option>
-                <option value='0102 - Caçapava'>0102 - Caçapava</option>
-                <option value='0103 - Trecin'>0103 - Trecin</option>
-                <option value='0104 - Betim'>0104 - Betim</option>
-                <option value='0105 - Residente - Renault'>0105 - Residente - Renault</option>
-                <option value='0106 - Residente - VW'>0106 - Residente - VW</option>
-                <option value='0107 - Residente - Honda'>0107 - Residente - Honda</option>
-              </select>
-            </div>
-
-            <div>
-              <span>E-mail do usuário ou Local da Produção</span>
+              <span>E-mail do usuário</span>
               <input type='text' placeholder='Informe o usuário' onChange={(e) => {setUser(e.target.value)}} list='users' />
             </div>
 
@@ -188,27 +171,7 @@ export default function NewDevices() {
           <fieldset>
 
             <div>
-              <span>Empresa </span>
-              <select name='proprietary' placeholder='Empresa' onChange={(e) => {setCompany(e.target.value)}} defaultValue=''>
-                <option value=''></option>
-                <option value='P01 - Treves do Brasil'>Treves do Brasil</option>
-                <option value='P02 - Trecin Industrial'>Trecin Industrial</option>
-                <option value='P03 - Hexanet'>Hexanet</option>
-                <option value='P04 - Treves SAS'>Treves SAS</option>
-                <option value='P05 - Copel'>Copel</option>
-                <option value='P06 - Algar'>Algar</option>
-                <option value='P07 - Embratel'>Embratel</option>
-                <option value='P08 - FCM'>FCM</option>
-                <option value='P09 - Selbetti'>Selbetti</option>
-                <option value='P10 - Ricohpy'>Ricohpy</option>
-                <option value='P11 - Telefonica'>Telefonica</option>
-                <option value='P12 - As Informatica'>As Informatica</option>
-                <option value='P13 - Bluepex'>Bluepex</option>
-              </select>
-            </div>
-
-            <div>
-              <span>Número do Contrato</span>
+              <span>Contrato</span>
               <input type='text' placeholder='Numero do Contrato' onChange={(e) => {setNumContract(e.target.value)}}  />
             </div>
 
@@ -217,35 +180,10 @@ export default function NewDevices() {
               <input type='text' placeholder='Valor do Equipamento' onChange={(e) => {setValueDevice(e.target.value)}} />
             </div>
 
-            <div>
-              <span>Valor Mensal</span>
-              <input type='text' placeholder='Valor Mensal R$' onChange={(e) => {setAmountCompany(e.target.value)}} />
-            </div>
-
-            <div>
-              <span>Data do final do Contrato</span>
-              <input type='date' placeholder='Data do Final do Contrato' onChange={(e) => {setDateEndLoan(e.target.value)}} />
-            </div>
           </fieldset>
 
           <h3 className={styles.subtitle}>Informações Adicionais</h3>
 
-          <fieldset>
-            <div>
-              <span>IP Reservado</span>
-              <input type='text' placeholder='Informe o IP' onChange={(e) => {setIP(e.target.value)}}/>
-            </div>
-
-            <div>
-              <span>Mac Address WIFI</span>
-              <input type='text' placeholder='Mac Address WIFI' onChange={(e) => {setMacAddress1(e.target.value.toLocaleUpperCase())}}/>
-            </div>
-
-            <div>
-              <span>Mac Address ETHERNET</span>
-              <input type='text' placeholder='Mac Address ETHERNET' onChange={(e) => {setMacAddress2(e.target.value.toLocaleUpperCase())}}/>
-            </div>
-          </fieldset>
             <fieldset>
               <span>Observação</span>
               <textarea placeholder='Informações extras' onChange={(e) => {setOBS(e.target.value)}}/>

@@ -15,9 +15,9 @@ async function getDataUsers() {
 
 export default function NewUsers() {
 
-  const [showModal, setShowModal] = useState('none');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [status, setStatus] = useState('');
   const [departament, setDepartament] = useState('');
   const [position, setPosition] = useState('');
@@ -27,13 +27,11 @@ export default function NewUsers() {
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
-    setShowModal('block');
-
-    const dataNow = new Date();
 
     const dataRaw = {
       name,
       email,
+      password,
       status,
       departament,
       position,
@@ -50,7 +48,6 @@ export default function NewUsers() {
 
     if(requestSave.ok){
       alert('Cadastrado');
-      setShowModal('none');
       nav.push('/users?registered=ok')
     }
   }
@@ -75,6 +72,11 @@ export default function NewUsers() {
             <div>
               <span>E-mail *</span>
               <input type='text' name='email' placeholder='Informe o email' required onChange={(e) => {setEmail(e.target.value)}}/>
+            </div>
+
+            <div>
+              <span>Password *</span>
+              <input type='text' name='password' placeholder='Informe a senha' required onChange={(e) => {setPassword(e.target.value)}}/>
             </div>
 
             <div>

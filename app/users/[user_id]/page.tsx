@@ -9,8 +9,6 @@ import MainLayout from '@/components/MainLayout/mainLayout'
 async function getDataUser(data: string) {
   const result = await fetch(data[0] + data[1]);
   const dataResult = await result.json();
-  console.log("uri: " + data[0] + data[1])
-  console.log(dataResult)
   return dataResult
 }
 
@@ -21,10 +19,10 @@ export default function EditUsers({ params }: {params:any}) {
     params.user_id
   ], getDataUser);
 
-  const [showModal, setShowModal] = useState('none');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
+  const [password, setPassword] = useState('');
   const [departamento, setDepartamento] = useState('');
   const [cargo, setCargo] = useState('');
   const [OBS, setOBS] = useState('');
@@ -32,39 +30,38 @@ export default function EditUsers({ params }: {params:any}) {
   const nav = useRouter();
 
   useEffect(()=> {
-    if(isLoading){
-      setShowModal('block')
-    }else {
-      setShowModal('none')
+    if(!isLoading){
       setName(data.user_name);
       setEmail(data.user_email);
+      setPassword(data.user_password);
+      setStatus(data.user_active);
+      setDepartamento(data.user_department);
       setCargo(data.user_position);
       setOBS(data.user_obs);
     }    
-  }, [isLoading, data])
+  }, [])
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
-    setShowModal('block');
-
-    setShowModal('none')
     setName(name);
     setEmail(email);
-    setCargo(departamento);
+    setPassword(password);
+    setDepartamento(departamento);
+    setCargo(cargo);
     setStatus(status);
     setOBS(OBS);
-
-    const dataNow = new Date();
-    
 
     const dataRaw = {
       name,
       email,
+      password,
       status,
-      departamento,
-      cargo,
-      OBS
+      departament: departamento,
+      position: cargo,
+      obs: OBS
     }
+    console.log({ dados_recebidos: data});
+    console.log({ dados_enviados: dataRaw});
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
       method: 'PUT',
@@ -73,9 +70,9 @@ export default function EditUsers({ params }: {params:any}) {
 
     if(request.ok){
       alert('Atualizado');
-      setShowModal('none');
       nav.push('/users?registered=ok')
     }
+
   }
 
   return (
@@ -84,6 +81,8 @@ export default function EditUsers({ params }: {params:any}) {
         <div className={styles.title}>Editar usuário</div>
         <Link href='/users' className={styles.buttonCancel}>Cancelar</Link>
       </div>
+
+      { isLoading ? 'Carregando....' : 
       <div className={styles.grid}>
         <form className={styles.new_form} onSubmit={handleForm}>
           <h3 className={styles.subtitle}>Informações do Usuário</h3>
@@ -104,8 +103,15 @@ export default function EditUsers({ params }: {params:any}) {
             </div>
 
             <div>
-              <span>Status *</span>
-              <select name='status' placeholder='status' required onChange={(e) => {setStatus(e.target.value)}} defaultValue={status}>
+              <span>Senha</span>
+              <input type='text' placeholder='Senha' required 
+              onChange={(e) => {setPassword(e.target.value)}} 
+              value={password}/>
+            </div>
+
+            <div>
+              <span>Status</span>
+              <select value={status} name='status' placeholder='status' required onChange={(e) => {setStatus(e.target.value)}} >
                 { status == "ativo" ? <option value='ativo' selected >Ativo</option> : <option value='ativo' >Ativo</option> }
                 { status == "desligado" ? <option value='desligado' selected >Desligado</option> : <option value='desligado' >Desligado</option> }
               </select>
@@ -116,25 +122,24 @@ export default function EditUsers({ params }: {params:any}) {
 
             <div>
               <span>Departamento</span>
-              <select name='departamento' placeholder='Departamento' onChange={(e) => {setDepartamento(e.target.value)}} >
-                <option value=''></option>
-                <option value='D01 - Logistica'>Logistica</option>
-                <option value='D02 - Fiscal'>Fiscal</option>
-                <option value='D03 - Financeiro'>Financeiro</option>
-                <option value='D04 - RH'>RH</option>
-                <option value='D05 - Qualidade'>Qualidade</option>
-                <option value='D06 - Comercial'>Comercial</option>
-                <option value='D07 - Sprint'>Sprint</option>
-                <option value='D08 - Controladoria'>Controladoria</option>
-                <option value='D09 - Engenharia'>Engenharia</option>
-                <option value='D10 - Projetos'>Projetos</option>
-                <option value='D11 - Diretor'>Diretor</option>
-                <option value='D12 - Contabilidade'>Contabilidade</option>
-                <option value='D13 - TI'>TI</option>
-                <option value='D14 - Produção'>Produção</option>
-                <option value='D15 - Portaria'>Portaria</option>
-                <option value='D16 - Compras'>Compras</option>
-                <option value='D17 - Industrial'>Industrial</option>
+              <select value={departamento} name='departamento' placeholder='Departamento' onChange={(e) => {setDepartamento(e.target.value)}} >
+              { departamento == "D01 - Logistica" ? <option value='D01 - Logistica' selected >Logistica</option> : <option value='D01 - Logistica'>Logistica</option> }
+              { departamento == "D02 - Fiscal" ? <option value='D02 - Fiscal' selected >Fiscal</option> : <option value='D02 - Fiscal' >Fiscal</option> }
+              { departamento == "D03 - Financeiro" ? <option value='D03 - Financeiro' selected >Financeiro</option> : <option value='D03 - Financeiro' >Financeiro</option> }
+              { departamento == "D04 - RH" ? <option value='D04 - RH' selected >RH</option> : <option value='D04 - RH'  >RH</option> }
+              { departamento == "D05 - Qualidade" ? <option value='D05 - Qualidade' selected >Qualidade</option> : <option value='D05 - Qualidade'  >Qualidade</option> }
+              { departamento == "D06 - Comercial" ? <option value='D06 - Comercial' selected >Comercial</option> : <option value='D06 - Comercial'  >Comercial</option> }
+              { departamento == "D07 - Sprint" ? <option value='D07 - Sprint' selected >Sprint</option> : <option value='D07 - Sprint'  >Sprint</option> }
+              { departamento == "D08 - Controladoria" ? <option value='D08 - Controladoria' selected >Controladoria</option> : <option value='D08 - Controladoria'  >Controladoria</option> }
+              { departamento == "D09 - Engenharia" ? <option value='D09 - Engenharia' selected >Engenharia</option> : <option value='D09 - Engenharia'  >Engenharia</option> }
+              { departamento == "D10 - Projetos" ? <option value='D10 - Projetos' selected >Projetos</option> : <option value='D10 - Projetos'  >Projetos</option> }
+              { departamento == "D11 - Diretor" ? <option value='D11 - Diretor' selected >Diretor</option> : <option value='D11 - Diretor'  >Diretor</option>  }
+              { departamento == "D12 - Contabilidade" ? <option value='D12 - Contabilidade' selected >Contabilidade</option> : <option value='D12 - Contabilidade'  >Contabilidade</option> }
+              { departamento == "D13 - TI" ? <option value='D13 - TI' selected >TI</option> : <option value='D13 - TI'  >TI</option>}
+              { departamento == "D14 - Produção" ? <option value='D14 - Produção' selected >Produção</option> : <option value='D14 - Produção'  >Produção</option>  }
+              { departamento == "D15 - Portaria" ? <option value='D15 - Portaria' selected >Portaria</option> : <option value='D15 - Portaria' >Portaria</option>  }
+              { departamento == "D16 - Compras" ? <option value='D16 - Compras' selected >Compras</option> : <option value='D16 - Compras' >Compras</option>  }
+              { departamento == "D17 - Industrial" ? <option value='D17 - Industrial' selected >Industrial</option> : <option value='D17 - Industrial' >Industrial</option> }
               </select>
             </div>
 
@@ -157,7 +162,7 @@ export default function EditUsers({ params }: {params:any}) {
               <button className={styles.buttonSave} name='sendButton' type='submit'>Atualizar</button>
             </fieldset>
         </form>
-      </div>
+      </div> }
     </MainLayout>
   )
 }

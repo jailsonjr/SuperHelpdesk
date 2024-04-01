@@ -159,10 +159,6 @@
   outline: none;
 }
 
-.new_form fieldset input:active, .new_form fieldset input:hover {
-  border: 2px solid #0A2D6C;
-}
-
 .new_form fieldset textarea {
   width: 100%;
   font-family: var(--font-mono);;

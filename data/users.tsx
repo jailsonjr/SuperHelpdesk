@@ -4,6 +4,7 @@ export type newUserType = {
   user_id?: string,
   name: string,
   email: string,
+  password: string,
   departament: string,
   position?: string,
   status?: string,
@@ -36,6 +37,7 @@ export const insertUsers = async (userdata: newUserType) => {
     data: {
       user_name: userdata.name,
       user_email: userdata.email,
+      user_password: userdata.password,
       user_department: userdata.departament,
       user_position: userdata.position,
       user_active: userdata.status,
@@ -49,20 +51,21 @@ export const insertUsers = async (userdata: newUserType) => {
 export const updateUser = async (userdata: newUserType) => {
   let resultData = null;
   console.log("Dados: ", userdata)
-  resultData = await dbOrm.users.update({
+  resultData = await dbOrm.users.updateMany({
     where: {
       user_email: userdata.email,
     },
     data: {
       user_name: userdata.name,
       user_email: userdata.email,
+      user_password: userdata.password,
       user_department: userdata.departament,
       user_position: userdata.position,
       user_active: userdata.status,
       user_obs: userdata.obs
     }
   });
-
+  console.log(resultData);
   return resultData;
 }
 

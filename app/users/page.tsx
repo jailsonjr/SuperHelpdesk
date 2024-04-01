@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import styles from './users.module.css';
 import useSWR from 'swr'
-import { useEffect, useState } from 'react';
 import MainLayout from '@/components/MainLayout/mainLayout';
 
 async function getData() {
@@ -13,19 +12,10 @@ async function getData() {
 }
 
 export default function Users() {
-
-  const { data, isLoading } = useSWR<any[]>('get-users',getData);
-  const [showModal, setShowModal] = useState('none');
+  
+  const { data } = useSWR<any[]>('get-users',getData);
 
   let result = {length: data?.length || 0, data};
-
-  useEffect(()=> {
-    if(isLoading){
-      setShowModal('block')
-    }else {
-      setShowModal('none')
-    }    
-  }, [isLoading])
 
   return (
     <>
@@ -52,7 +42,6 @@ export default function Users() {
           <tbody>
             
             {result && result.data?.map((document) => {
-              console.log(document)
               return (
               <tr key={document.user_email}>
                 <td><Link href={`/users/${document.user_id}`}>{document.user_name.toLocaleUpperCase()}</Link></td>

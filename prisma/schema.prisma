@@ -8,13 +8,40 @@ datasource db {
 }
 
 model users {
-  user_id         String? @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id         String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   user_name       String  @db.VarChar(255)
   user_email      String  @unique(map: "users_user_email_unique") @db.VarChar(255)
   user_department String  @db.VarChar(150)
   user_position   String? @db.VarChar(100)
   user_active     String @db.VarChar(10) @default("active")
+  user_password   String @db.VarChar(255) 
   user_obs        String? @db.VarChar(255) 
   createdAt       DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+}
+
+model devices {
+  device_id               String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  device_type             String  @db.VarChar(255)
+  device_serial           String  @unique(map: "devices_serial_number_unique") @db.VarChar(150)
+  device_status           String  @db.VarChar(150)
+  device_date_delivered   String? @db.VarChar(100)
+  device_obs              String? @db.VarChar(200) @default("active")
+  user_id                 String? @db.VarChar(255)
+  contract_id             String? @db.VarChar(255) 
+  createdAt               DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt               DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+}
+
+
+model contracts {
+  contract_id           String @default(dbgenerated("gen_random_uuid()")) @db.Uuid @unique
+  contract_description  String @db.VarChar(255)
+  contract_status       String @db.VarChar(150)
+  contract_date_begin   String @db.VarChar(150)
+  contract_end_begin    String? @db.VarChar(100)
+  contract_obs          String? @db.VarChar(150)
+  supplier_id           String? @db.VarChar(255)
+  createdAt             DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt             DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
 }
