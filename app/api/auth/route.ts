@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     resultUser.user_password == dataRaw.password
     ){
       const dataSession = jwt.sign({
+          id: resultUser.user_id,
           email: resultUser.user_email,
           role: resultUser.user_position
       }, process.env.JWT_SECRET as string, {expiresIn: '1h'})

@@ -4,21 +4,21 @@ import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout';
 
 async function getData() {
-  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
-  const result = await fetch(uri);
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices/list-devices`;
+  const result = await fetch(uri, { credentials: 'include' });
   const dataResult = await result.json();
-  return dataResult
+  return dataResult.resultDevices
 }
 
-export default function Users() {
+export default function ListDevices() {
   
-  const { data } = useSWR<any[]>('get-users',getData);
-
+  const { data, isLoading } = useSWR<any[]>('get-ListDevices',getData);
   let result = {length: data?.length || 0, data};
 
   return (
     <>
     <MainLayout limited_view={true}>
+      { isLoading ? 'Carregando...' : <>
       <div className={styles.submenu}>
         <div className={styles.title}>Dispositivos</div>
         <div>
@@ -31,31 +31,31 @@ export default function Users() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Planta</th>
               <th>Tipo</th>
-              <th>Marca/Modelo</th>
               <th>Serial</th>
-              <th>Usuario</th>
-              <th>Proprietário</th>
+              <th>Data Entregue</th>
               <th>Status</th>
+              <th>OBS</th>
             </tr>
           </thead>
           <tbody>
             
             {result && result.data?.map((document) => {
               return (
-              <tr key={document.user_email}>
-                <td>{document.user_name.toLocaleUpperCase()}</td>
-                <td>{document.user_email}</td>
-                <td>{document.user_department}</td>
-                <td>{document.user_position}</td>
-                <td>{document.user_active.toLocaleUpperCase()}</td>
+              <tr key={document.device_id}>
+                <td>{document.device_id}</td>
+                <td>{document.device_type}</td>
+                <td>{document.device_serial}</td>
+                <td>{document.device_date_delivered}</td>
+                <td>{document.device_status}</td>
+                <td>{document.device_obs}</td>
               </tr>);
             })}
           </tbody>
-        </table> : <p className={styles.sinResult}>Sem usuários cadastrados</p> } 
+        </table> : <p className={styles.sinResult}>Sem dispositivos cadastrados</p> } 
         
       </div>
+      </>}
     </MainLayout>
       </>
   )

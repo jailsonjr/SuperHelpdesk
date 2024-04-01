@@ -1,3 +1,4 @@
+import {PrismaClient} from "@prisma/client"
 
 export type newDeviceType = {
   id_treves: string,
@@ -13,18 +14,15 @@ export type newDeviceType = {
   deviceValue?: number,
   monthlyAmount?: number,
   dateEndLoan?: string,
-  properties?: {
-    ip?: string,
-    macaddress1?: string,
-    macaddress2?: string
-  },
   obs?: string,
   timestamps: {
     created_at: string,
     updated_at: string
-  }
-  
+  }  
 };
+
+const dbOrm = new PrismaClient();
+
 
 export const insertDevices = async (devicedata: newDeviceType) => {
   return [];
@@ -32,5 +30,14 @@ export const insertDevices = async (devicedata: newDeviceType) => {
 
 export const getDevices = async () => {
   let resultData:Array<{}> = [];
+  return resultData;
+}
+
+export const getDevicesByUser = async (user_id: string) => {
+  let resultData = await dbOrm.devices.findMany({
+    where: {
+      user_id: user_id
+    }
+  });
   return resultData;
 }
