@@ -1,15 +1,30 @@
+'use client'
 import styles from './AppBar.module.css';
 import Image from 'next/image';
 import Icons from '../../app/icons';
+import { useRouter as useNav} from 'next/navigation'
+
+import { FormEvent } from 'react'
 
 export default function AppBar() {
 
-    return (      
-        <div className={styles.mainMenuBackground}>
-          <div className={styles.mainMenu}>
-            <div>
-                <Icons.menu className={styles.menu} />
-            </div>
+  const nav = useNav();
+  const handleLogoff = async (event: FormEvent) => {
+    event.preventDefault();
+    const requestLogoff = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/logoff`,{
+      method: 'POST',
+    })
+  
+    const dataResult = await requestLogoff.json();
+  
+    if(dataResult){
+      nav.push('/dashboard');
+    }
+  }
+
+  return (      
+      <div className={styles.mainMenuBackground}>
+        <div className={styles.mainMenu}>
             <div className={styles.logo}>
               <Image 
                     src="/logo.png"
@@ -20,8 +35,13 @@ export default function AppBar() {
                     priority
                 />
             </div>
+
+          <div className={styles.exitApp} onClick={handleLogoff}>
+              <Icons.sair className={styles.menu} />
+              <span>Sair</span>
           </div>
-        </div>        
+        </div>
+      </div>        
   )
 
   

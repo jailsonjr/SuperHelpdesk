@@ -1,9 +1,41 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
+import { FormEvent, useState } from 'react'
 import styles from './page.module.css'
 import Icons from './icons';
+import { useRouter as useNav} from 'next/navigation'
 
 export default function Login() {
+
+    const nav = useNav();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleForm = async (event: FormEvent) => {
+        event.preventDefault(); 
+
+        const dataRaw = {
+            email,
+            password
+        }
+
+        const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/auth`,{
+            method: 'post',
+            body: JSON.stringify(dataRaw)
+        })
+        console.log(request)
+        const resultData = await request.json();
+
+        if(resultData.error){
+            alert("Credenciais erradas")
+        } else {
+            localStorage.setItem('session', resultData.token);
+            nav.push('/dashboard');
+        }
+
+    }
+
   return (
     <main className={styles.main}>
         <section className={styles.loginWrapper}>
@@ -21,12 +53,12 @@ export default function Login() {
                     <h1>Entre na sua conta</h1>
                 </div>
             </header>
-            <form className={styles.formLoginWrapper}>
+            <form className={styles.formLoginWrapper} onSubmit={handleForm}>
                 <fieldset className={styles.formLoginFieldset}>
                     <span className={styles.formLoginName}>E-mail</span>
                     <div className={styles.formLoginField}>
                         <Icons.email className={styles.formLoginWrapperIcon}/>
-                        <input name='login_email' placeholder='Digite seu e-mail' type="email" required/>
+                        <input name='login_email' placeholder='Digite seu e-mail' type="email" required onChange={(e) => {setEmail(e.target.value)}}/>
                     </div>
                 </fieldset>
                 <fieldset className={styles.formLoginFieldset}>
@@ -36,6 +68,7 @@ export default function Login() {
                         <input 
                             name='login_senha' placeholder='Digite sua senha' 
                             type="password" required
+                            onChange={(e) => {setPassword(e.target.value)}}
                         />
                     </div>
                 </fieldset>

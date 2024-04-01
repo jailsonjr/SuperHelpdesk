@@ -39,7 +39,7 @@ export default function EditUsers({ params }: {params:any}) {
       setCargo(data.user_position);
       setOBS(data.user_obs);
     }    
-  }, [])
+  }, [data])
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
@@ -60,8 +60,6 @@ export default function EditUsers({ params }: {params:any}) {
       position: cargo,
       obs: OBS
     }
-    console.log({ dados_recebidos: data});
-    console.log({ dados_enviados: dataRaw});
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/users`,{
       method: 'PUT',

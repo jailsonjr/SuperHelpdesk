@@ -30,6 +30,16 @@ export const getUserByID = async(user_id: string) => {
   return resultData;
 }
 
+export const getUserByEmail = async(user_email: string) => {
+  let resultData = null;
+  resultData = await dbOrm.users.findFirst({
+    where: {
+      user_email: user_email
+    }
+  });
+  return resultData;
+}
+
 export const insertUsers = async (userdata: newUserType) => {
   let resultData = null;
   console.log("Dados: ", userdata.departament)
@@ -50,8 +60,7 @@ export const insertUsers = async (userdata: newUserType) => {
 
 export const updateUser = async (userdata: newUserType) => {
   let resultData = null;
-  console.log("Dados: ", userdata)
-  resultData = await dbOrm.users.updateMany({
+  resultData = await dbOrm.users.update({
     where: {
       user_email: userdata.email,
     },

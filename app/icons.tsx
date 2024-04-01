@@ -1,4 +1,4 @@
-import { MdAlternateEmail,MdLockOutline, MdOutlineMenu, MdOutlineSimCard } from "react-icons/md";
+import { MdAlternateEmail,MdLockOutline, MdOutlineMenu, MdOutlineSimCard, MdOutlineExitToApp } from "react-icons/md";
 import { RiDashboardLine } from "react-icons/ri";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { TbDeviceDesktopAnalytics } from "react-icons/tb";
@@ -14,7 +14,8 @@ let AppIcons = {
     contract: LiaFileContractSolid,
     menu: MdOutlineMenu,
     plus: FiPlus,
-    SimCard: MdOutlineSimCard
+    SimCard: MdOutlineSimCard,
+    sair: MdOutlineExitToApp
 }
 
 export default AppIcons;

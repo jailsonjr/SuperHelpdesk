@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const dataRaw:newUserType = await req.json();
-  console.log("DADOS UPDATE: ", dataRaw)
   const updateData = await updateUser(dataRaw);
   return NextResponse.json(updateData);
 }

@@ -8,11 +8,31 @@
 
 .mainMenu {
     display: flex;
+    justify-content: space-between;
     padding: .8rem 3rem;
 }  
-  
-.logo {
-  margin-left: 0.5rem;
+
+.exitApp {
+  display: flex;
+  padding: 0 0.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+}
+
+.exitApp span {
+  padding-top: 8px;
+  margin-left: 5px;
+}
+
+.exitApp:hover {
+  color: var(--main-color);
+  cursor:pointer;
+  background-color: #eaeaea;
+}
+
+.exitApp:hover .menu {
+  color: var(--main-color);
 }
 
 .menu {
@@ -26,9 +46,3 @@
   align-items: center;
 }
 
-.menu:hover {
-  color: var(--main-color);
-  cursor:pointer;
-  background-color: #f3f3f3;
-  
-}
