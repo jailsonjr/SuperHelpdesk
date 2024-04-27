@@ -48,9 +48,7 @@
 
 .modalExit {
   display: block;
-  position: absolute;
-  right: 150px;
-  top: 13px;
+  margin: 0 auto;
   border-radius: 5px;
   color: #fff;
   font-weight: 500;

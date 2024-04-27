@@ -5,15 +5,18 @@ import { FormEvent, useState } from 'react'
 import styles from './page.module.css'
 import Icons from './icons';
 import { useRouter as useNav} from 'next/navigation'
+import AppLoading from '@/components/AppLoading/appLoading'
 
 export default function Login() {
 
     const nav = useNav();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleForm = async (event: FormEvent) => {
         event.preventDefault(); 
+        setLoading(true);
 
         const dataRaw = {
             email,
@@ -24,10 +27,11 @@ export default function Login() {
             method: 'post',
             body: JSON.stringify(dataRaw)
         })
-        console.log(request)
+
         const resultData = await request.json();
 
         if(resultData.error){
+            setLoading(false);
             alert("Credenciais erradas")
         } else {
             localStorage.setItem('session', resultData.token);
@@ -72,9 +76,11 @@ export default function Login() {
                         />
                     </div>
                 </fieldset>
-                <div className={styles.loginFormFooter}>                    
-                    <input name='login_send' type="submit" value="entrar"/>
+                <div className={styles.loginFormFooter}>     
+                    {loading == true ? <AppLoading className={styles.modalLogin} size={30} /> : <>               
+                    <input name='login_send' type="submit" value="Entrar" />
                     <Link href="/lost_password" className={styles.loginLink}>Esqueceu a senha?</Link>
+                    </> }
                 </div>
             </form>
             <footer className={styles.footerWrapper}>

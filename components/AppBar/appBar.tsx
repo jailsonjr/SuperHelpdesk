@@ -1,29 +1,32 @@
 'use client'
+import { useRouter as useNav} from 'next/navigation'
+import { FormEvent, useState } from 'react'
+
 import styles from './AppBar.module.css';
 import Image from 'next/image';
 import Icons from '../../app/icons';
-import { useRouter as useNav} from 'next/navigation'
+import AppLoading from '../AppLoading/appLoading';
 
-import { FormEvent, useState } from 'react'
 
 export default function AppBar() {
 
   const nav = useNav();
-  const [showModal, setShowModal] = useState(false)
+  const [loading,setLoading] = useState(false);
 
   const handleLogoff = async (event: FormEvent) => {
-    setShowModal(() => true);
-
     event.preventDefault();
+    setLoading(true);
+    
     const requestLogoff = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/logoff`,{
       method: 'POST',
     })
-  
+
     const dataResult = await requestLogoff.json();
   
     if(dataResult){
       nav.push('/');
     }
+  
   }
 
   return (      
@@ -45,19 +48,8 @@ export default function AppBar() {
               <span>Sair</span>
           </div>
         </div>
-        {showModal && 
-          <div className={styles.modalExit}>
-              <Image 
-                    src={Icons.loading}
-                    alt="Logo of treves" 
-                    width={30}
-                    height={35}
-                    priority
-                />
-          </div>
-        }
+        {loading && <AppLoading className='modalExit' size={30} /> }
       </div>        
   )
-
-  
+ 
 }

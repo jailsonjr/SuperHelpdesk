@@ -37,3 +37,15 @@ input:focus {
 input:-webkit-autofill {
   -webkit-background-clip: text;
 }
+
+.modalExit {
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: 50%;
+  margin: 0 auto;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+  z-index: 1000;
+}

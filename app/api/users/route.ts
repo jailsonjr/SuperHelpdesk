@@ -10,7 +10,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const dataRaw:newUserType = await req.json();
   const insertData = await insertUsers(dataRaw);
-
   return NextResponse.json(insertData);
 }
 

@@ -42,7 +42,6 @@ export const getUserByEmail = async(user_email: string) => {
 
 export const insertUsers = async (userdata: newUserType) => {
   let resultData = null;
-  console.log("Dados: ", userdata.departament)
   resultData = await dbOrm.users.create({
     data: {
       user_name: userdata.name,
@@ -74,7 +73,6 @@ export const updateUser = async (userdata: newUserType) => {
       user_obs: userdata.obs
     }
   });
-  console.log(resultData);
   return resultData;
 }
 

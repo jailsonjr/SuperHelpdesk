@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import styles from './devices.module.css';
 import useSWR from 'swr'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import MainLayout from '@/components/MainLayout/mainLayout';
 
 async function getData() {
@@ -15,17 +15,8 @@ async function getData() {
 export default function Devices() {
 
   const { data, isLoading } = useSWR<any[]>('get-devices',getData);
-  const [showModal, setShowModal] = useState('none');
 
   let result = {length: data?.length || 0, data};
-
-  useEffect(()=> {
-    if(isLoading){
-      setShowModal('block')
-    }else {
-      setShowModal('none')
-    }    
-  }, [isLoading])
 
   return (
     <>

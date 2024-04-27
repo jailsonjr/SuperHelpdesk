@@ -2,6 +2,7 @@
 import styles from './dashboard.module.css';
 import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout';
+import AppLoading from '@/components/AppLoading/appLoading';
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/kpis`;
@@ -17,14 +18,16 @@ export default function Dashboard() {
     devices: number,
   };
 
-  const { data } = useSWR<KpiType>('get-kpis',getData);
+  const { data, isLoading } = useSWR<KpiType>('get-kpis',getData);
 
   return (
     <MainLayout>
       <div className={styles.kpisCardsWrappers}>
         <div className={styles.kpisCard}>
           <span className={styles.kpisTitle}>Total de usuários</span>
-          <span className={styles.kpisAmount}>{data?.users}</span>
+          <span className={styles.kpisAmount}>
+            {isLoading == true ? <AppLoading size={20} /> :  data?.users }
+          </span>
         </div>
 
         <div className={styles.kpisCard}>
