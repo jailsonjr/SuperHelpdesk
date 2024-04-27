@@ -43,28 +43,26 @@ export default function Devices() {
         <table border-collapse="collapse">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Planta</th>
-              <th>Tipo</th>
-              <th>Marca/Modelo</th>
               <th>Serial</th>
-              <th>Usuario</th>
-              <th>Proprietário</th>
+              <th>Tipo</th>              
+              <th>User</th>
+              <th>Data Entregue</th>
+              <th>Contrato</th>
               <th>Status</th>
+              <th>OBS</th>
             </tr>
           </thead>
           <tbody>
             {result && result.data?.map((document) => {
               return (
-              <tr key={document.doc_data.id_treves}>
-                <td>{document.doc_data.id_treves.toLocaleUpperCase()}</td>
-                <td>{document.doc_data.filial}</td>
-                <td>{document.doc_data.type.toLocaleUpperCase()}</td>
-                <td>{document.doc_data.brandModel}</td>
-                <td>{document.doc_data.serialNumber.toLocaleUpperCase()}</td>
-                <td>{document.doc_data.user}</td>
-                <td>{document.doc_data.company}</td>                
-                <td>{document.doc_data.status.toLocaleUpperCase()}</td>
+              <tr key={document.device_id}>
+                <td>{document.device_serial}</td>  
+                <td>{document.device_type.toLocaleUpperCase()}</td>                
+                <td>{document.user_id}</td>       
+                <td>{document.device_date_delivered.toLocaleUpperCase()}</td>          
+                <td>{document.contract_id}</td> 
+                <td>{document.device_status.toLocaleUpperCase()}</td>
+                <td>{document.device_obs.toLocaleUpperCase()}</td>
               </tr>);
             })}
           </tbody>

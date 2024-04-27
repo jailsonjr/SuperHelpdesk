@@ -46,3 +46,13 @@
   align-items: center;
 }
 
+.modalExit {
+  display: block;
+  position: absolute;
+  right: 150px;
+  top: 13px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+}
+

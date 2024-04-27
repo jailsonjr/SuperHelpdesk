@@ -30,6 +30,7 @@ export const insertDevices = async (devicedata: newDeviceType) => {
 
 export const getDevices = async () => {
   let resultData:Array<{}> = [];
+  resultData = await dbOrm.devices.findMany();
   return resultData;
 }
 

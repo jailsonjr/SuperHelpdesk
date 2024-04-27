@@ -4,6 +4,7 @@ import { HiOutlineUsers } from "react-icons/hi2";
 import { TbDeviceDesktopAnalytics } from "react-icons/tb";
 import { LiaFileContractSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
+import loadingIcon from "@/public/icons/loading.gif"
 
 let AppIcons = {
     email: MdAlternateEmail,
@@ -15,7 +16,8 @@ let AppIcons = {
     menu: MdOutlineMenu,
     plus: FiPlus,
     SimCard: MdOutlineSimCard,
-    sair: MdOutlineExitToApp
+    sair: MdOutlineExitToApp,
+    loading: loadingIcon
 }
 
 export default AppIcons;

@@ -4,7 +4,6 @@ import { getDevices, insertDevices, newDeviceType } from '../../../data/devices'
 
 export async function GET() {
   const result = await getDevices();
-  console.log('ENV' + process.env.NODE_ENV);
   return NextResponse.json(result);
 }
 

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model users {
-  user_id         String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id         String @default(dbgenerated("gen_random_uuid()")) @db.Uuid @unique
   user_name       String  @db.VarChar(255)
   user_email      String  @unique(map: "users_user_email_unique") @db.VarChar(255)
   user_department String  @db.VarChar(150)
@@ -27,8 +27,8 @@ model devices {
   device_status           String  @db.VarChar(150)
   device_date_delivered   String? @db.VarChar(100)
   device_obs              String? @db.VarChar(200) @default("active")
-  user_id                 String? @db.VarChar(255)
-  contract_id             String? @db.VarChar(255) 
+  user_id                 String @db.Uuid
+  contract_id             String? @db.Uuid
   createdAt               DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt               DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
 }
