@@ -22,7 +22,7 @@ export default function AppBar() {
     const dataResult = await requestLogoff.json();
   
     if(dataResult){
-      nav.push('/dashboard');
+      nav.push('/');
     }
   }
 
