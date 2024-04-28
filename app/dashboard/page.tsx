@@ -31,27 +31,27 @@ export default function Dashboard() {
         </div>
 
         <div className={styles.kpisCard}>
-          <span className={styles.kpisTitle}>Total de computadores</span>
+          <span className={styles.kpisTitle}>Total de Desktops</span>
           <span className={styles.kpisAmount}>150</span>
         </div>
 
         <div className={styles.kpisCard}>
-          <span className={styles.kpisTitle}>Total de smartphones</span>
+          <span className={styles.kpisTitle}>Total de Notebooks</span>
           <span className={styles.kpisAmount}>150</span>
         </div>
 
         <div className={styles.kpisCard}>
-          <span className={styles.kpisTitle}>Total de perifericos</span>
+          <span className={styles.kpisTitle}>Total de Monitores</span>
           <span className={styles.kpisAmount}>150</span>
         </div>
 
         <div className={styles.kpisCard}>
-          <span className={styles.kpisTitle}>Total de linhas telefonicas</span>
+          <span className={styles.kpisTitle}>Total de Contratos</span>
           <span className={styles.kpisAmount}>150</span>
         </div>
 
         <div className={styles.kpisCard}>
-          <span className={styles.kpisTitle}>Total de contratos</span>
+          <span className={styles.kpisTitle}>Valor total de Equipamentos</span>
           <span className={styles.kpisAmount}>150</span>
         </div>
       </div>

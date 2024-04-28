@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { FormEvent, useEffect, useState } from 'react'
 import MainLayout from '@/components/MainLayout/mainLayout'
+import AppLoading from '@/components/AppLoading/appLoading'
 
 async function getDataUser(data: string) {
   const result = await fetch(data[0] + data[1]);
@@ -26,6 +27,7 @@ export default function EditUsers({ params }: {params:any}) {
   const [departamento, setDepartamento] = useState('');
   const [cargo, setCargo] = useState('');
   const [OBS, setOBS] = useState('');
+  const [userID, setUserID] = useState('');
 
   const nav = useRouter();
 
@@ -38,6 +40,7 @@ export default function EditUsers({ params }: {params:any}) {
       setDepartamento(data.user_department);
       setCargo(data.user_position);
       setOBS(data.user_obs);
+      setUserID(params.user_id)
     }    
   }, [data])
 
@@ -52,6 +55,7 @@ export default function EditUsers({ params }: {params:any}) {
     setOBS(OBS);
 
     const dataRaw = {
+      user_id: userID,
       name,
       email,
       password,
@@ -80,7 +84,7 @@ export default function EditUsers({ params }: {params:any}) {
         <Link href='/users' className={styles.buttonCancel}>Cancelar</Link>
       </div>
 
-      { isLoading ? 'Carregando....' : 
+      {isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
       <div className={styles.grid}>
         <form className={styles.new_form} onSubmit={handleForm}>
           <h3 className={styles.subtitle}>Informações do Usuário</h3>

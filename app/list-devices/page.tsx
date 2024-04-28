@@ -3,6 +3,9 @@ import styles from './users.module.css';
 import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout';
 
+import AppLoading from '@/components/AppLoading/appLoading';
+
+
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices/list-devices`;
   const result = await fetch(uri, { credentials: 'include' });
@@ -18,7 +21,7 @@ export default function ListDevices() {
   return (
     <>
     <MainLayout limited_view={true}>
-      { isLoading ? 'Carregando...' : <>
+      { isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> : <>
       <div className={styles.submenu}>
         <div className={styles.title}>Dispositivos</div>
         <div>

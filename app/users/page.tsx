@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './users.module.css';
 import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout';
+import AppLoading from '@/components/AppLoading/appLoading';
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
@@ -27,6 +28,7 @@ export default function Users() {
           <Link href='/users/new-user' className={styles.newRegister}>Novo usuário</Link>
         </div>
       </div>
+        {isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
         <div className={styles.grid}>        
         {result.length > 0 ? 
           <table border-collapse="collapse">
@@ -53,7 +55,7 @@ export default function Users() {
               })}
             </tbody>
           </table> : <p className={styles.sinResult}>Sem usuários cadastrados</p> } 
-        </div>
+        </div> }
     </MainLayout>
       </>
   )

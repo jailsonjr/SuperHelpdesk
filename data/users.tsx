@@ -16,7 +16,11 @@ const dbOrm = new PrismaClient();
 
 export const getUsers = async () => {
   let resultData:Array<{}> = [];
-  resultData = await dbOrm.users.findMany();
+  resultData = await dbOrm.users.findMany({
+    orderBy: {
+      user_name: "asc"
+    }
+  });
   return resultData;
 }
 
@@ -61,7 +65,7 @@ export const updateUser = async (userdata: newUserType) => {
   let resultData = null;
   resultData = await dbOrm.users.update({
     where: {
-      user_email: userdata.email,
+      user_id: userdata.user_id,
     },
     data: {
       user_name: userdata.name,

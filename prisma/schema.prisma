@@ -21,13 +21,13 @@ model users {
 }
 
 model devices {
-  device_id               String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  device_id               String @default(dbgenerated("gen_random_uuid()")) @db.Uuid @unique
   device_type             String  @db.VarChar(255)
   device_serial           String  @unique(map: "devices_serial_number_unique") @db.VarChar(150)
   device_status           String  @db.VarChar(150)
   device_date_delivered   String? @db.VarChar(100)
   device_obs              String? @db.VarChar(200) @default("active")
-  user_id                 String @db.Uuid
+  user_id                 String? @db.VarChar(40)
   contract_id             String? @db.Uuid
   createdAt               DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt               DateTime  @default(now()) @updatedAt @db.Timestamptz(3)

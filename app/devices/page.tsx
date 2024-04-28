@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import styles from './devices.module.css';
 import useSWR from 'swr'
-import { useEffect } from 'react';
 import MainLayout from '@/components/MainLayout/mainLayout';
+import AppLoading from '@/components/AppLoading/appLoading';
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`;
@@ -12,9 +12,32 @@ async function getData() {
   return dataResult
 }
 
+async function getUsers() {
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/users`;
+  const result = await fetch(uri);
+  const dataResult = await result.json();
+  return dataResult
+}
+
 export default function Devices() {
 
   const { data, isLoading } = useSWR<any[]>('get-devices',getData);
+  const users = useSWR<any>('get-users', getUsers);
+
+  const getUserName = (userID:string) => {
+    let result = "";
+    
+    users.data.forEach((user:any) => {
+      if(user.user_id == userID) {
+        console.log("user ID: " + user.user_id + " - userID: " + userID + " name: " + user.user_name)
+        result = user.user_name
+      }
+    })
+
+    console.log("NAME CARAI : " + result)
+
+    return result
+  }
 
   let result = {length: data?.length || 0, data};
 
@@ -29,6 +52,7 @@ export default function Devices() {
           <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>
+      {isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
       <div className={styles.grid}>
       {result.length > 0 ? 
         <table border-collapse="collapse">
@@ -47,9 +71,9 @@ export default function Devices() {
             {result && result.data?.map((document) => {
               return (
               <tr key={document.device_id}>
-                <td>{document.device_serial}</td>  
+                <td><Link href={`/devices/${document.device_id}`}>{document.device_serial}</Link></td>  
                 <td>{document.device_type.toLocaleUpperCase()}</td>                
-                <td>{document.user_id}</td>       
+                <td>{getUserName(document.user_id)}</td>       
                 <td>{document.device_date_delivered.toLocaleUpperCase()}</td>          
                 <td>{document.contract_id}</td> 
                 <td>{document.device_status.toLocaleUpperCase()}</td>
@@ -59,6 +83,7 @@ export default function Devices() {
           </tbody>
         </table> : <p className={styles.sinResult}>Sem equipamentos cadastrados</p> } 
       </div>
+      }
     </MainLayout>
       </>
   )
