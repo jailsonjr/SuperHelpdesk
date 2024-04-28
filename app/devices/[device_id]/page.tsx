@@ -162,9 +162,9 @@ export default function EditUsers({ params }: {params:any}) {
                   {users.data.map((items:any) => {
 
                     if(items.user_id == deviceUser){
-                      return <option value={items.user_id} selected>{items.user_name}</option>
+                      return <option key={items.user_id} value={items.user_id} selected>{items.user_name}</option>
                     }else{
-                      return <option value={items.user_id}>{items.user_name}</option>
+                      return <option key={items.user_id} value={items.user_id}>{items.user_name}</option>
                     }
                     
                   })}     
