@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import styles from '../devices.module.css'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout'
 
@@ -13,68 +13,38 @@ async function getDataUsers() {
   return dataResult
 }
 
-
-async function getDataBrands() {
-  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/brands`;
-  const result = await fetch(uri);
-  const dataResult = await result.json();
-  return dataResult
-}
-
 export default function NewDevices() {
 
-  const userData = useSWR<any[]>('get-users',getDataUsers);
-  const brandsData = useSWR<any[]>('get-brands',getDataBrands);
+  const getUsers = useSWR<any[]>('get-users',getDataUsers);
 
-  const [id_device, setIdDevice] = useState('');
-  const [type, setType] = useState('');
-  const [brand, setBrand] = useState('');
-  const [ns, setNs] = useState('');
-  const [status, setStatus] = useState('');
-  const [filial, setFilial] = useState('');
-  const [user, setUser] = useState('');
-  const [dateDelivered, setDateDelivered] = useState('');
-  const [company, setCompany] = useState('');
-  const [numContract, setNumContract] = useState('');
-  const [amountContract, setAmountCompany] = useState('');
-  const [valueDevices, setValueDevice] = useState('');
-  const [dateEndLoan, setDateEndLoan] = useState('');
-  const [ip, setIP] = useState('');
-  const [macaddress1, setMacAddress1] = useState('');
-  const [macaddress2, setMacAddress2] = useState('');
-  const [OBS, setOBS] = useState('');
+  const [deviceSerial, setDeviceSerial] = useState('');
+  const [deviceType, setDeviceType] = useState('');
+  const [deviceStatus, setDeviceStatus] = useState('');
+  const [deviceDateDelivered, setDeviceDateDelivered] = useState('');
+  const [deviceUser, setDeviceUser] = useState('');
+  const [deviceContract, setDeviceContract] = useState('');
+  const [deviceObs, setDeviceObs] = useState('');
+  const [users, setUsers] = useState<any[] | undefined>();
 
   const nav = useRouter();
+
+  useEffect(()=> {
+    if(!getUsers.isLoading){
+        setUsers(getUsers.data)
+    }    
+  }, [getUsers.data])
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
 
-    const dataNow = new Date();
-
     const dataRaw = {
-      id_device,
-      type,
-      brandModel: brand,
-      serialNumber: ns,
-      status,
-      filial,
-      user,
-      dateDelivered,
-      company,
-      numContract,
-      amountContract,
-      valueDevices,
-      dateEndLoan,
-      properties: {
-        ip,
-        macaddress1,
-        macaddress2
-      },
-      OBS,
-      timestamps: {
-        created_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes(),
-        updated_at: dataNow.getDate().toString().padStart(2,'0') + '/' + dataNow.getMonth().toString().padStart(2,'0') + '/' + dataNow.getFullYear() + ' - ' + dataNow.getHours() + ':' + dataNow.getMinutes()
-      }
+      deviceType,
+      deviceSerial,
+      deviceStatus,
+      deviceUser,
+      deviceDateDelivered,
+      deviceContract,
+      deviceObs
     }
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_URL_BASE}/api/devices`,{
@@ -86,6 +56,7 @@ export default function NewDevices() {
       alert('Cadastrado');
       nav.push('/devices?registered=ok')
     }
+    
   }
 
   return (
@@ -100,15 +71,13 @@ export default function NewDevices() {
           <h3 className={styles.subtitle}>Informações do Dispositivo</h3>
           <fieldset>  
             <div>
-              <span>ID do Equipamento *</span>
-              <input type='text' placeholder='ID do Equipamento' 
-              onChange={(e) => {setIdDevice(e.target.value.toLocaleUpperCase())}}
-              name='id_device' required/>
+              <span>Número Serial *</span>
+              <input type='text' placeholder='Número Serial' required onChange={(e) => {setDeviceSerial(e.target.value.toLocaleUpperCase())}}/>
             </div>
 
             <div>
               <span>Tipo do Dispositivo *</span>
-              <select name='type' placeholder='status' required onChange={(e) => {setType(e.target.value)}} defaultValue=''>
+              <select name='type' placeholder='status' required onChange={(e) => {setDeviceType(e.target.value)}} defaultValue=''>
                 <option value=''></option>
                 <option value='desktop'>Desktop</option>
                 <option value='notebook'>Notebook</option>
@@ -126,23 +95,8 @@ export default function NewDevices() {
             </div>
 
             <div>
-              <span>Marca - Modelo *</span>
-              <input type='text' placeholder='Informe a Marca - Modelo' required onChange={(e) => {setBrand(e.target.value)}} list='brands'/>
-              <datalist id='brands'>
-                {brandsData.data && brandsData.data.map((brands) => {
-                  return <option key={brands.doc_data.model} value={brands.doc_data.brand + ' ' + brands.doc_data.model}>{brands.doc_data.brand + ' ' + brands.doc_data.model}</option>
-                })}
-              </datalist>
-            </div>
-
-            <div>
-              <span>Número Serial *</span>
-              <input type='text' placeholder='Número Serial' required onChange={(e) => {setNs(e.target.value.toLocaleUpperCase())}}/>
-            </div>
-
-            <div>
               <span>Status *</span>
-              <select name='status' placeholder='status' required onChange={(e) => {setStatus(e.target.value)}} defaultValue=''>
+              <select name='status' placeholder='status' required onChange={(e) => {setDeviceStatus(e.target.value)}} defaultValue=''>
                 <option value=''></option>
                 <option value='ativo'>Ativo</option>
                 <option value='quebrado'>Quebrado</option>
@@ -154,14 +108,27 @@ export default function NewDevices() {
           <h3 className={styles.subtitle}>Informações do Usuário / Local</h3>
           <fieldset>
 
-            <div>
-              <span>E-mail do usuário</span>
-              <input type='text' placeholder='Informe o usuário' onChange={(e) => {setUser(e.target.value)}} list='users' />
-            </div>
+          <div>
+                <span>Usuário</span> 
+                <select value={deviceUser} name='user' placeholder='user' onChange={(e) => {setDeviceUser(e.target.value)}}>
+                  
+                  {deviceUser == "" ? <option value="" selected></option>: <option value=""></option> }
+
+                  {users?.map((items:any) => {
+
+                    if(items.user_id == deviceUser){
+                      return <option key={items.user_id} value={items.user_id} selected>{items.user_name}</option>
+                    }else{
+                      return <option key={items.user_id} value={items.user_id}>{items.user_name}</option>
+                    }
+                    
+                  })}     
+                </select>    
+              </div>
 
             <div>
               <span>Date da Entrega</span>
-              <input type='date' placeholder='date delivered' onChange={(e) => {setDateDelivered(e.target.value)}}/>
+              <input type='date' placeholder='date delivered' onChange={(e) => {setDeviceDateDelivered(e.target.value)}}/>
             </div>
           </fieldset>
 
@@ -171,12 +138,7 @@ export default function NewDevices() {
 
             <div>
               <span>Contrato</span>
-              <input type='text' placeholder='Numero do Contrato' onChange={(e) => {setNumContract(e.target.value)}}  />
-            </div>
-
-            <div>
-              <span>Valor equipamento</span>
-              <input type='text' placeholder='Valor do Equipamento' onChange={(e) => {setValueDevice(e.target.value)}} />
+              <input type='text' placeholder='Numero do Contrato' onChange={(e) => {setDeviceContract(e.target.value)}}  />
             </div>
 
           </fieldset>
@@ -185,7 +147,7 @@ export default function NewDevices() {
 
             <fieldset>
               <span>Observação</span>
-              <textarea placeholder='Informações extras' onChange={(e) => {setOBS(e.target.value)}}/>
+              <textarea placeholder='Informações extras' onChange={(e) => {setDeviceObs(e.target.value)}}/>
             </fieldset>
 
             <fieldset>

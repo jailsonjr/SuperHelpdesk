@@ -17,9 +17,20 @@ export type newDeviceType = {
 
 const dbOrm = new PrismaClient();
 
-
 export const insertDevices = async (devicedata: newDeviceType) => {
-  return [];
+  let resultData = null;
+  resultData = await dbOrm.devices.create({
+    data: {
+      device_type: devicedata.deviceType,              
+      device_serial: devicedata.deviceSerial,           
+      device_status: devicedata.deviceStatus,           
+      device_date_delivered: devicedata.deviceDateDelivered,  
+      device_obs: devicedata.deviceObs,              
+      user_id: devicedata.deviceUser,               
+      contract_id: devicedata.deviceContract
+    }
+  });
+  return resultData;
 }
 
 export const getDevices = async () => {
@@ -61,10 +72,20 @@ export const updateDevice = async (devicedata: newDeviceType) => {
       device_status: devicedata.deviceStatus,
       device_obs: devicedata.deviceObs,
       device_date_delivered: devicedata.deviceDateDelivered,
-      user_id: devicedata.deviceUser
+      user_id: devicedata.deviceUser,
+      contract_id: devicedata.deviceContract
     }
   });
 
   
+  return resultData;
+}
+
+export const getDeviceByType = async (deviceType: string) => {
+  let resultData = await dbOrm.devices.findMany({
+    where: {
+      device_type: deviceType
+    }
+  });
   return resultData;
 }

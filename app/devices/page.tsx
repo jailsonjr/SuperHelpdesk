@@ -29,13 +29,9 @@ export default function Devices() {
     
     users.data.forEach((user:any) => {
       if(user.user_id == userID) {
-        console.log("user ID: " + user.user_id + " - userID: " + userID + " name: " + user.user_name)
         result = user.user_name
       }
     })
-
-    console.log("NAME CARAI : " + result)
-
     return result
   }
 

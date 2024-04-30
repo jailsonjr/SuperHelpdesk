@@ -21,7 +21,6 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/', request.url))    
     }
 
-    
     if(sessionCookieDecoded?.role as string != 'Administrador' && request.nextUrl.pathname != '/list-devices') {
         return NextResponse.redirect(new URL('/list-devices', request.url)) 
     }

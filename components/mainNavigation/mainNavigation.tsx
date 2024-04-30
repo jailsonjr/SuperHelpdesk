@@ -22,10 +22,6 @@ export default function MainNavigation() {
             <Icons.contract className={styles.navicon} />
             <span className={styles.navtext}>Contratos</span>
           </Link>
-          <Link href='/linhas' className={styles.navlink}>
-            <Icons.SimCard className={styles.navicon} />
-            <span className={styles.navtext}>Linhas</span>
-          </Link>
         </nav>
     )
 }

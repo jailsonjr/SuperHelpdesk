@@ -11,15 +11,17 @@
   flex-wrap: wrap;
 }
 
+.links {
+  min-width: 230px;
+}
+
 .kpisCard{
+  flex: 1 1 33.3333%;
   background-color: #fff;
   border: 2px solid #eaeaea;
   display: flex;
-  flex-grow: 1;
-  max-width: 350px;
   min-width: 230px;
   flex-direction: column; 
-  flex-wrap: wrap;
   padding: 1rem;
   border-radius: 4px;
   margin: 0 0.5rem 1rem 0.5rem;
@@ -35,4 +37,11 @@
   font-size: 1.3125rem;
   color: #444;
   font-weight: 600;
+}
+
+.subTitle {
+  color: #444;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  font-size: 1rem;
 }

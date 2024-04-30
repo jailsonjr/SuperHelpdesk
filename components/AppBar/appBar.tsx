@@ -6,6 +6,7 @@ import styles from './AppBar.module.css';
 import Image from 'next/image';
 import Icons from '../../app/icons';
 import AppLoading from '../AppLoading/appLoading';
+import Link from 'next/link';
 
 
 export default function AppBar() {
@@ -32,16 +33,20 @@ export default function AppBar() {
   return (      
       <div className={styles.mainMenuBackground}>
         <div className={styles.mainMenu}>
-            <div className={styles.logo}>
-              <Image 
-                    src="/logo.png"
-                    alt="Logo" 
-                    width={105}
-                    height={33}
-                    className={styles.logo}
-                    priority
-                />
-            </div>
+          <Link href="/dashboard">
+              <div className={styles.logo}>
+                
+                  <Image 
+                        src="/logo.png"
+                        alt="Logo" 
+                        width={105}
+                        height={33}
+                        className={styles.logo}
+                        priority
+                    />
+                
+              </div>
+          </Link>
 
           <div className={styles.exitApp} onClick={handleLogoff}>
               <Icons.sair className={styles.menu} />

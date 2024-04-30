@@ -79,7 +79,6 @@ export default function Login() {
                 <div className={styles.loginFormFooter}>     
                     {loading == true ? <AppLoading className={styles.modalLogin} size={30} /> : <>               
                     <input name='login_send' type="submit" value="Entrar" />
-                    <Link href="/lost_password" className={styles.loginLink}>Esqueceu a senha?</Link>
                     </> }
                 </div>
             </form>

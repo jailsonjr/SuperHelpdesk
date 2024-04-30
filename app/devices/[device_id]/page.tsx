@@ -154,7 +154,7 @@ export default function EditUsers({ params }: {params:any}) {
 
           <fieldset>
               <div>
-                <span>Usuário {deviceUser} </span> 
+                <span>Usuário</span> 
                 <select value={deviceUser} name='user' placeholder='user' onChange={(e) => {setDeviceUser(e.target.value)}}>
                   
                   {deviceUser == "" ? <option value="" selected></option>: <option value=""></option> }
@@ -172,7 +172,7 @@ export default function EditUsers({ params }: {params:any}) {
               </div>
 
               <div>
-                <span>Date da Entrega</span>
+                <span>Data da Entrega</span>
                 <input value={deviceDateDelivered} type='date' placeholder='data de entrega' onChange={(e) => {setDeviceDateDelivered(e.target.value)}}/>
               </div>
           </fieldset>
@@ -183,7 +183,7 @@ export default function EditUsers({ params }: {params:any}) {
                 <div>
                   <span>Contrato</span>
                   <input type='text' placeholder='contrato' 
-                  onChange={(e) => {setDeviceSerial(e.target.value.toLocaleUpperCase())}}
+                  onChange={(e) => {setDeviceContract(e.target.value.toLocaleUpperCase())}}
                   value={deviceContract}
                   name='contrato'/>
                 </div>
