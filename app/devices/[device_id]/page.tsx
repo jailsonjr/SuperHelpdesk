@@ -20,7 +20,14 @@ async function getData() {
   return dataResult
 }
 
-export default function EditUsers({ params }: {params:any}) {
+async function getDataContracts() {
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/contracts`;
+  const result = await fetch(uri);
+  const dataResult = await result.json();
+  return dataResult
+}
+
+export default function EditDevice({ params }: {params:any}) {
 
   const { data, isLoading } = useSWR<any>([
     `${process.env.NEXT_PUBLIC_URL_BASE}/api/devices/`,
@@ -28,6 +35,7 @@ export default function EditUsers({ params }: {params:any}) {
   ], getDataDevice);
 
   const users = useSWR<any>('get-users', getData);
+  const contracts = useSWR<any>('get-contracts', getDataContracts);
 
   const [deviceSerial, setDeviceSerial] = useState('');
   const [deviceType, setDeviceType] = useState('');
@@ -37,11 +45,13 @@ export default function EditUsers({ params }: {params:any}) {
   const [deviceContract, setDeviceContract] = useState('');
   const [deviceObs, setDeviceObs] = useState('');
   const [deviceID, setDeviceID] = useState('');
+  const [deviceContractAmount, setDeviceContractAmount] = useState(0);
 
   const nav = useRouter();
 
   useEffect(()=> {
-    if(!isLoading && !users.isLoading){
+    if(!isLoading && !users.isLoading && !contracts.isLoading){
+      console.log(contracts)
       setDeviceSerial(data.device_serial);
       setDeviceType(data.device_type);
       setDeviceStatus(data.device_status);
@@ -53,10 +63,9 @@ export default function EditUsers({ params }: {params:any}) {
       setDeviceContract(data.contract_id);
       setDeviceObs(data.device_obs);  
       setDeviceID(params.device_id)
+      setDeviceContractAmount(data.contract_amount)
     }    
-  }, [data, users.data])
-
-  
+  }, [data, users.data, contracts.data])
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault(); 
@@ -67,6 +76,7 @@ export default function EditUsers({ params }: {params:any}) {
     setDeviceUser(deviceUser);
     setDeviceContract(deviceContract);
     setDeviceObs(deviceObs);
+    setDeviceContractAmount(deviceContractAmount)
 
     const dataRaw = {
       deviceID,
@@ -76,7 +86,8 @@ export default function EditUsers({ params }: {params:any}) {
       deviceDateDelivered,
       deviceUser,
       deviceContract,
-      deviceObs
+      deviceObs,
+      deviceContractAmount
     }
  
 
@@ -101,7 +112,7 @@ export default function EditUsers({ params }: {params:any}) {
         <Link href='/devices' className={styles.buttonCancel}>Cancelar</Link>
       </div>
 
-      {isLoading && users.isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
+      {isLoading && users.isLoading && contracts.isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
       <div className={styles.grid}>
         <form className={styles.new_form} onSubmit={handleForm}>
           <h3 className={styles.subtitle}>Informações do Dispositivo</h3>
@@ -180,13 +191,30 @@ export default function EditUsers({ params }: {params:any}) {
           <h3 className={styles.subtitle}>Informações do Contrato</h3>
 
             <fieldset>
-                <div>
-                  <span>Contrato</span>
-                  <input type='text' placeholder='contrato' 
-                  onChange={(e) => {setDeviceContract(e.target.value.toLocaleUpperCase())}}
-                  value={deviceContract}
-                  name='contrato'/>
-                </div>
+            <div>
+                <span>Contrato</span> 
+                <select value={deviceContract} name='contrato' placeholder='Contrato' onChange={(e) => {setDeviceContract(e.target.value)}}>
+                  
+                  {deviceContract == "" ? <option value="" selected></option>: <option value=""></option> }
+
+                  {contracts.data.map((items:any) => {
+
+                    if(items.contract_id == deviceContract){
+                      return <option key={items.contract_id} value={items.contract_id} selected>{items.supplier_description} - {items.contract_description}</option>
+                    }else{
+                      return <option key={items.contract_id} value={items.contract_id}>{items.supplier_description} - {items.contract_description}</option>
+                    }
+                    
+                  })}     
+                </select>    
+              </div>
+              <div>
+                <span>Valor </span>
+                <input type='number' placeholder='Valor' 
+                onChange={(e) => {setDeviceContractAmount(parseFloat(e.target.value))}}
+                value={deviceContractAmount}
+                name='serial' required/>
+              </div>
             </fieldset>
 
 

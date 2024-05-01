@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import MainLayout from '@/components/MainLayout/mainLayout';
 import AppLoading from '@/components/AppLoading/appLoading';
 import Link from 'next/link';
+import { Decimal } from '@prisma/client/runtime/library';
 
 async function getData() {
   let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/kpis`;
@@ -21,7 +22,8 @@ export default function Dashboard() {
     monitores: number,
     teclados: number,
     devices: number,
-    contracts: number
+    contracts: number,
+    sumContracts: number
   };
 
   const { data, isLoading } = useSWR<KpiType>('get-kpis',getData);
@@ -53,7 +55,9 @@ export default function Dashboard() {
 
         <div className={styles.kpisCard}>
           <span className={styles.kpisTitle}>Valor total de Equipamentos</span>
-          <span className={styles.kpisAmount}>150</span>
+          <span className={styles.kpisAmount}>
+            {isLoading == true ? <AppLoading size={20} /> :  data?.sumContracts }
+          </span>
         </div>
       </div>
       <h3 className={styles.subTitle}>Tipo de Dispositivos</h3>
@@ -83,20 +87,6 @@ export default function Dashboard() {
             <span className={styles.kpisTitle}>Total de Impressoras</span>
             <span className={styles.kpisAmount}>
             {isLoading == true ? <AppLoading size={20} /> :  data?.monitores }
-            </span>
-          </div>
-
-          <div className={styles.kpisCard}>
-            <span className={styles.kpisTitle}>Total de Smartphone</span>
-            <span className={styles.kpisAmount}>
-            {isLoading == true ? <AppLoading size={20} /> :  350 }
-            </span>
-          </div>
-
-          <div className={styles.kpisCard}>
-            <span className={styles.kpisTitle}>Total de headsets</span>
-            <span className={styles.kpisAmount}>
-            {isLoading == true ? <AppLoading size={20} /> :  250 }
             </span>
           </div>
       </div>

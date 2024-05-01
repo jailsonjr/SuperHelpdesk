@@ -19,10 +19,18 @@ async function getUsers() {
   return dataResult
 }
 
+async function getContracts() {
+  let uri = `${process.env.NEXT_PUBLIC_URL_BASE}/api/contracts`;
+  const result = await fetch(uri);
+  const dataResult = await result.json();
+  return dataResult
+}
+
 export default function Devices() {
 
   const { data, isLoading } = useSWR<any[]>('get-devices',getData);
   const users = useSWR<any>('get-users', getUsers);
+  const contracts = useSWR<any>('get-contracts', getContracts);
 
   const getUserName = (userID:string) => {
     let result = "";
@@ -30,6 +38,17 @@ export default function Devices() {
     users.data.forEach((user:any) => {
       if(user.user_id == userID) {
         result = user.user_name
+      }
+    })
+    return result
+  }
+
+  const getContractName = (contractID:string) => {
+    let result = "";
+    
+    contracts.data.forEach((contract:any) => {
+      if(contract.contract_id == contractID) {
+        result = contract.supplier_description + " - " + contract.contract_description
       }
     })
     return result
@@ -71,7 +90,7 @@ export default function Devices() {
                 <td>{document.device_type.toLocaleUpperCase()}</td>                
                 <td>{getUserName(document.user_id)}</td>       
                 <td>{document.device_date_delivered.toLocaleUpperCase()}</td>          
-                <td>{document.contract_id}</td> 
+                <td>{getContractName(document.contract_id)}</td> 
                 <td>{document.device_status.toLocaleUpperCase()}</td>
                 <td>{document.device_obs.toLocaleUpperCase()}</td>
               </tr>);

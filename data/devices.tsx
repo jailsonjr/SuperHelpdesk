@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import dbOrm from "./dbInstance";
 
 export type newDeviceType = {
@@ -9,6 +10,7 @@ export type newDeviceType = {
   deviceDateDelivered?: string,
   deviceContract?: string,
   deviceObs?: string,
+  deviceContractAmount?: Decimal
   timestamps: {
     created_at: string,
     updated_at: string
@@ -25,7 +27,8 @@ export const insertDevices = async (devicedata: newDeviceType) => {
       device_date_delivered: devicedata.deviceDateDelivered,  
       device_obs: devicedata.deviceObs,              
       user_id: devicedata.deviceUser,               
-      contract_id: devicedata.deviceContract
+      contract_id: devicedata.deviceContract,
+      contract_amount: devicedata.deviceContractAmount
     }
   });
   return resultData;
@@ -71,7 +74,8 @@ export const updateDevice = async (devicedata: newDeviceType) => {
       device_obs: devicedata.deviceObs,
       device_date_delivered: devicedata.deviceDateDelivered,
       user_id: devicedata.deviceUser,
-      contract_id: devicedata.deviceContract
+      contract_id: devicedata.deviceContract,
+      contract_amount: devicedata.deviceContractAmount
     }
   });
 
@@ -86,4 +90,13 @@ export const getDeviceByType = async (deviceType: string) => {
     }
   });
   return resultData;
+}
+
+export const getSumDeviceAmount = async () => {
+  let resultData = await dbOrm.devices.aggregate({
+    _sum: {
+      contract_amount: true
+    }
+  });
+  return resultData._sum.contract_amount;
 }
