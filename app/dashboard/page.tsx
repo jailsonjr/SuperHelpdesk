@@ -20,7 +20,8 @@ export default function Dashboard() {
     notebooks: number,
     monitores: number,
     teclados: number,
-    devices: number
+    devices: number,
+    contracts: number
   };
 
   const { data, isLoading } = useSWR<KpiType>('get-kpis',getData);
@@ -45,7 +46,9 @@ export default function Dashboard() {
 
       <Link href="/contracts" className={styles.kpisCard}>
           <span className={styles.kpisTitle}>Total de Contratos</span>
-          <span className={styles.kpisAmount}>150</span>
+          <span className={styles.kpisAmount}>
+            {isLoading == true ? <AppLoading size={20} /> :  data?.contracts }
+          </span>
       </Link>
 
         <div className={styles.kpisCard}>

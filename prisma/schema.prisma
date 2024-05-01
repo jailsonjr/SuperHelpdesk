@@ -41,7 +41,7 @@ model contracts {
   contract_date_begin   String @db.VarChar(150)
   contract_end_begin    String? @db.VarChar(100)
   contract_obs          String? @db.VarChar(150)
-  supplier_id           String? @db.VarChar(255)
+  supplier_description  String? @db.VarChar(255)
   createdAt             DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt             DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
 }

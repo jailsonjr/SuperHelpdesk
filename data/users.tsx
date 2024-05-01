@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client"
+import dbOrm from "./dbInstance";
 
 export type newUserType = {
   user_id?: string,
@@ -10,9 +10,6 @@ export type newUserType = {
   status?: string,
   obs?: string
 };
-
-
-const dbOrm = new PrismaClient();
 
 export const getUsers = async () => {
   let resultData:Array<{}> = [];

@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client"
+import dbOrm from "./dbInstance";
 
 export type newDeviceType = {
   deviceID: string,
@@ -14,8 +14,6 @@ export type newDeviceType = {
     updated_at: string
   }  
 };
-
-const dbOrm = new PrismaClient();
 
 export const insertDevices = async (devicedata: newDeviceType) => {
   let resultData = null;
