@@ -32,7 +32,7 @@ export default function Devices() {
   const users = useSWR<any>('get-users', getUsers);
   const contracts = useSWR<any>('get-contracts', getContracts);
 
-  const getUserName = (userID:string) => {
+  const getUserName = (userID:string, users: any) => {
     let result = "";
     
     users.data.forEach((user:any) => {
@@ -43,7 +43,7 @@ export default function Devices() {
     return result
   }
 
-  const getContractName = (contractID:string) => {
+  const getContractName = (contractID:string, contracts: any) => {
     let result = "";
     
     contracts.data.forEach((contract:any) => {
@@ -67,7 +67,8 @@ export default function Devices() {
           <Link href='/devices/new-device' className={styles.newRegister}>Novo dispositivo</Link>
         </div>
       </div>
-      {isLoading == true ? <AppLoading className={styles.modalUsers} size={30} /> :
+      {isLoading == true && users.isLoading == true && contracts.isLoading == true ? 
+      <AppLoading className={styles.modalUsers} size={30} /> :
       <div className={styles.grid}>
       {result.length > 0 ? 
         <table border-collapse="collapse">
@@ -88,9 +89,9 @@ export default function Devices() {
               <tr key={document.device_id}>
                 <td><Link href={`/devices/${document.device_id}`}>{document.device_serial}</Link></td>  
                 <td>{document.device_type.toLocaleUpperCase()}</td>                
-                <td>{getUserName(document.user_id)}</td>       
+                <td>{getUserName(document.user_id, users)}</td>       
                 <td>{document.device_date_delivered.toLocaleUpperCase()}</td>          
-                <td>{getContractName(document.contract_id)}</td> 
+                <td>{getContractName(document.contract_id, contracts)}</td> 
                 <td>{document.device_status.toLocaleUpperCase()}</td>
                 <td>{document.device_obs.toLocaleUpperCase()}</td>
               </tr>);
